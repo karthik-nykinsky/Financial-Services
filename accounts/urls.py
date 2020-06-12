@@ -12,4 +12,5 @@ urlpatterns = [
     path('register/partner', views.PartnerSignUpView.as_view(), name='partner-register'),
     path('partner/', views.partner, name='partner'),
     path('client/', views.client, name='client'),
+    path('client/create_order', views.createOrder, name='client-order'),
 ]

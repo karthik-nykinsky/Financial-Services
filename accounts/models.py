@@ -141,11 +141,11 @@ class Order(models.Model):
     comments = models.CharField(max_length=200, null=True, blank=True)
     ordered_date = models.DateTimeField(auto_now_add=True,null=True)
 
-# class Manage(models.Model):
-#     order = models.ForeignKey(Order, null=True, on_delete=models.SET_NULL)
-#     partner = models.ForeignKey(Partner, null=True, on_delete=models.SET_NULL)
+class Manage(models.Model):
+    order = models.ForeignKey(Order, null=True, on_delete=models.SET_NULL)
+    partner = models.ForeignKey(Partner, null=True, on_delete=models.SET_NULL)
 
-# class Product(models.Model):
-#     manager = models.ForeignKey(Manage, null=True, on_delete=models.SET_NULL)
-#     documents = models.ImageField(null=True)
-#     comments = models.CharField(max_length=200, null=True, blank=True)
+class Product(models.Model):
+    manager = models.ForeignKey(Manage, null=True, on_delete=models.SET_NULL)
+    # documents = models.ImageField(null=True)
+    comments = models.CharField(max_length=200, null=True, blank=True)

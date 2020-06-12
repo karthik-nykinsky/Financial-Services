@@ -1,6 +1,6 @@
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
-from .models import Client, User, Service, Partner
+from .models import Client, User, Service, Partner, Order
 from django.db import transaction
 
 
@@ -81,3 +81,9 @@ class PartnerSignUpForm(UserCreationForm):
                 city=self.cleaned_data.get('city') )
         partner.services_provided.add(*self.cleaned_data.get('services_provided'))
         return user
+
+class CreateOrderForm(forms.ModelForm):
+    
+    class Meta:
+        model = Order
+        fields = ['service_req', 'city', 'comments']
