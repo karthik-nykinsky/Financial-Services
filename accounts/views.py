@@ -122,9 +122,10 @@ def partner(request):
 @client_required
 def client(request):
 	client = Client.objects.get(user = request.user)
-	print(client)
 	my_orders = Order.objects.filter(client = client)
-	context = {'client':client, 'orders': my_orders}
+	sqlcommand2 = 'SELECT * from accounts_order where accounts_order.id IN ( Select order_id from accounts_manage where id IN ( SELECT accounts_manage.id as oid from accounts_manage,accounts_product where oid=accounts_product.managed_id )) AND client_id = %s'
+	done = Order.objects.raw(sqlcommand2,[client.pk])
+	context = {'client':client, 'orders': my_orders, 'done':done}
 	return render(request, 'accounts/customer.html', context)
 
 @client_required

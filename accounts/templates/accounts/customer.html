@@ -81,4 +81,32 @@
 	</div>
 </div>
 
+<br>
+
+<div class="row">
+	<div class="col-md">
+		<div class="card card-body">
+			<h5>Delivered Products:</h5>
+			<table class="table table-sm">
+				<tr>
+					<th>Category</th>
+					<th>City</th>
+					<th>Date Ordered</th>
+					<th>Product</th>
+				</tr>
+				{% for order in done %}
+					<tr>
+					<td>{{order.service_req}}</td>
+					<td>{{order.city}}</td>
+					<td>{{order.ordered_date}}</td>
+					<td>
+						<a class="btn btn-outline-info  btn-sm btn-block" href="#">view product</a>
+					</td>
+					</tr>
+				{% endfor %}
+			</table>
+		</div>
+	</div>
+</div>
+
 {% endblock %}
