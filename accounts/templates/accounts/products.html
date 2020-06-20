@@ -5,22 +5,99 @@
 		<br>
 
 		<div class="row">
+			<div class="col">
+				<div class="col-md">
+					<div class="card text-center text-white  mb-3" id="total-orders">
+						  <div class="card-header">
+							  <h5 class="card-title">Total Orders</h5>
+						  </div>
+						  <div class="card-body">
+							<h3 class="card-title"></h3>
+						  </div>
+					</div>
+				</div>
+			</div>
+		
+			<div class="col">
+				<div class="col-md">
+					<div class="card text-center text-white  mb-3" id="orders-delivered">
+						  <div class="card-header">
+							  <h5 class="card-title">Orders Delivered</h5>
+						  </div>
+						  <div class="card-body">
+							<h3 class="card-title"></h3>
+						  </div>
+					</div>
+				</div>
+			</div>
+		
+			<div class="col">
+				<div class="col-md">
+					<div class="card text-center text-white  mb-3" id="orders-pending">
+						  <div class="card-header">
+							  <h5 class="card-title">Orders Pending</h5>
+						  </div>
+						  <div class="card-body">
+							<h3 class="card-title"></h3>
+						  </div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
 			<div class="col-md">
 				<div class="card card-body">
-					<h5>Products</h5>
-				</div>
-				<div class="card card-body">
-					<table class="table">
+					<h5>My Pending Orders:</h5>
+					<table class="table table-sm">
 						<tr>
-							<th>Product</th>
+							<th>Client</th>
 							<th>Category</th>
-							<th>Price</th>
+							<th>City</th>
+							<th>Date Ordered</th>
+							<th></th>
 						</tr>
-						
+						{% for order in todo %}
+							<tr>
+							<td>{{order.client.user.first_name}}</td>
+							<td>{{order.service_req}}</td>
+							<td>{{order.city}}</td>
+							<td>{{order.ordered_date}}</td>
+							<td>
+								<a class="btn btn-outline-info  btn-sm btn-block" href="{% url 'deliver-product' order.id %}">Review Order</a>
+							</td>
+							</tr>
+						{% endfor %}
 					</table>
 				</div>
 			</div>
-			
 		</div>
+
+		<div class="row">
+			<div class="col-md">
+				<div class="card card-body">
+					<h5>Delivered Orders:</h5>
+					<table class="table table-sm">
+						<tr>
+							<th>Client</th>
+							<th>Category</th>
+							<th>City</th>
+							<th>Date Ordered</th>
+							<th></th>
+						</tr>
+						{% for order in done %}
+							<tr>
+							<td>{{order.client.user.first_name}}</td>
+							<td>{{order.service_req}}</td>
+							<td>{{order.city}}</td>
+							<td>{{order.ordered_date}}</td>
+							<td></td>
+							</tr>
+						{% endfor %}
+					</table>
+				</div>
+			</div>
+		</div>
+		
 
 {% endblock content %}

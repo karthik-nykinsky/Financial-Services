@@ -146,6 +146,6 @@ class Manage(models.Model):
     partner = models.ForeignKey(Partner, null=True, on_delete=models.SET_NULL)
 
 class Product(models.Model):
-    manager = models.ForeignKey(Manage, null=True, on_delete=models.SET_NULL)
+    managed = models.ForeignKey(Manage, null=True, on_delete=models.SET_NULL)
     # documents = models.ImageField(null=True)
     comments = models.CharField(max_length=200, null=True, blank=True)

@@ -39,7 +39,7 @@ def unauthenticated_user(view_func):
                 return redirect('client')
             elif request.user.is_partner:
                 return redirect('partner')
-            else:
+            elif request.user.is_staff:
                 return redirect('home')
         else:
             return view_func(request, *args, **kwargs)
