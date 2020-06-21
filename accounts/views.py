@@ -10,23 +10,27 @@ from .forms import *
 from .models import *
 
 # Create your views here.
-@login_required(login_url='client-login')
+@unauthenticated_user
 def home(request):
-	orders = Order.objects.all()
-	clients = Client.objects.all()
-	total_orders_count = orders.count()
 
-	# pending_orders = Order.objects.raw('SELECT * FROM accounts_order')
-	mysqlcommand = 'Select * from accounts_order where accounts_order.id NOT IN ( SELECT accounts_order.id as oid from accounts_order,accounts_manage where oid=accounts_manage.order_id )'
-	pending_orders = Order.objects.raw(mysqlcommand)
-	print(total_orders_count)
-	for p in pending_orders:
-		print(p.city)
-	# assigned_orders = [] #pending_orders-product
-	# delivered_orders = [] #product
 
-	context = {'orders': orders, 'clients':clients, 'total_orders':total_orders_count}
-	return render(request, 'accounts/dashboard.html',context)
+	# orders = Order.objects.all()
+	# clients = Client.objects.all()
+	# total_orders_count = orders.count()
+
+	# # pending_orders = Order.objects.raw('SELECT * FROM accounts_order')
+	# mysqlcommand = 'Select * from accounts_order where accounts_order.id NOT IN ( SELECT accounts_order.id as oid from accounts_order,accounts_manage where oid=accounts_manage.order_id )'
+	# pending_orders = Order.objects.raw(mysqlcommand)
+	# print(total_orders_count)
+	# for p in pending_orders:
+	# 	print(p.city)
+	# # assigned_orders = [] #pending_orders-product
+	# # delivered_orders = [] #product
+
+	# context = {'orders': orders, 'clients':clients, 'total_orders':total_orders_count}
+	# return render(request, 'accounts/dashboard.html',context)
+
+	return render(request, 'accounts/home.html')
 
 class ClientSignUpView(CreateView):
     model = User
@@ -92,23 +96,6 @@ def PartnerlogoutPage(request):
 	logout(request)
 	return redirect('partner-login')
 
-# def registerPage(request):
-# 	form = ClientForm()
-
-# 	if request.method == 'POST':
-# 		form = ClientForm(request.POST)
-# 		if form.is_valid():
-# 			form.save()
-# 			user = form.cleaned_data.get('firstname')
-# 			messages.success(request, "Account is created for " + user)
-# 			print(form)
-# 			return redirect('login')
-# 		else:
-# 			return HttpResponse("404 error")
-		
-# 	context = {'form':form}
-# 	return render(request, 'accounts/register.html', context)
-
 @partner_required
 def partner(request):
 	partner = Partner.objects.get(user = request.user)
@@ -117,7 +104,7 @@ def partner(request):
 	sqlcommand2 = 'SELECT * from accounts_order where accounts_order.id IN ( Select order_id from accounts_manage where id IN ( SELECT accounts_manage.id as oid from accounts_manage,accounts_product where oid=accounts_product.managed_id ) AND partner_id = %s)'
 	done = Order.objects.raw(sqlcommand2,[partner.pk])
 	context = {'partner':partner, 'todo': todo, 'done':done}
-	return render(request, 'accounts/products.html', context)
+	return render(request, 'accounts/partner.html', context)
 
 @client_required
 def client(request):
@@ -126,7 +113,7 @@ def client(request):
 	sqlcommand2 = 'SELECT * from accounts_order where accounts_order.id IN ( Select order_id from accounts_manage where id IN ( SELECT accounts_manage.id as oid from accounts_manage,accounts_product where oid=accounts_product.managed_id )) AND client_id = %s'
 	done = Order.objects.raw(sqlcommand2,[client.pk])
 	context = {'client':client, 'orders': my_orders, 'done':done}
-	return render(request, 'accounts/customer.html', context)
+	return render(request, 'accounts/client.html', context)
 
 @client_required
 def createOrder(request):
@@ -146,6 +133,17 @@ def createOrder(request):
 		return redirect('client')
 	
 	return render(request, 'accounts/create-order.html', context)
+
+@client_required
+def viewProduct(request,pk):
+	client = Client.objects.get(user = request.user)
+	order = Order.objects.get(id = pk)
+	sqlcommand = 'SELECT * from accounts_product where managed_id IN (SELECT id from accounts_manage where accounts_manage.order_id = %s )'
+	product = Order.objects.raw(sqlcommand,[pk])
+	sqlcommand1 = 'SELECT * from accounts_manage where accounts_manage.order_id = %s '
+	managed = Manage.objects.raw(sqlcommand1,[pk])
+	context = {'client':client, 'order': order, 'product': product[0], 'partner': managed[0].partner}
+	return render(request, 'accounts/view-product.html', context)
 
 @partner_required
 def deliverProduct(request,pk):

@@ -1,0 +1,15 @@
+{% extends 'accounts/main.html' %}
+{% load static %}
+{% block content %}
+    <p>
+        <h3>Order Description</h3>
+    Service Required: {{order.service_req}}<br>
+    Client Comments: {{order.comments}}<br>
+    Ordered Date: {{order.ordered_date}}<br>
+    City: {{order.city}}<br>
+        <h3>Product</h3>
+    Product: {{product.comments}}<br>
+    By Partner: {{partner}}<br> 
+    </p>
+    </form>
+{% endblock %}

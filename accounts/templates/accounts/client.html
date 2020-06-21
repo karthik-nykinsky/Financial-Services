@@ -100,7 +100,7 @@
 					<td>{{order.city}}</td>
 					<td>{{order.ordered_date}}</td>
 					<td>
-						<a class="btn btn-outline-info  btn-sm btn-block" href="#">view product</a>
+						<a class="btn btn-outline-info  btn-sm btn-block" href="{% url 'view-product' order.id %}">view product</a>
 					</td>
 					</tr>
 				{% endfor %}
