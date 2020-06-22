@@ -1,6 +1,6 @@
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
-from .models import Client, User, Service, Partner, Order, Product
+from .models import *
 from django.db import transaction
 
 
@@ -93,3 +93,9 @@ class DeliverProductForm(forms.ModelForm):
     class Meta:
         model = Product
         fields = ['comments']
+
+class PartnerSelectForm(forms.ModelForm):
+
+    class Meta:
+        model = Manage
+        fields = ['partner']

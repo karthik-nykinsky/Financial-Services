@@ -1,0 +1,38 @@
+{% extends 'accounts/main.html' %}
+
+{% block content %}
+    
+
+
+
+
+<br>
+
+
+<div class="row">
+    <div class="col-md">
+        <div class="card card-body">
+            <table class="table table-sm">
+                <h5>Assign Partner to Orders</h5>
+                <tr>
+                    <th>Order Id</th>
+                    <th>Service</th>
+                    <th>client</th>
+                    <th>Date Orderd</th>
+                    <th>Assign Partner</th>
+                {% for o in ToBAsnd %}
+                <tr>
+                    <td>{{o.id}}</td>
+                    <td>{{o.service_req.name}}</td>
+                    <td>{{o.client.user.first_name}}</td>
+                    <td>{{o.ordered_date}}</td>
+                    <td><a class="btn btn-outline-info  btn-sm btn-block" href="{% url 'Assign-Partner' o.id %}">Assign-Partner</a></td>
+                 {% endfor %}
+                </tr>
+
+            </table>
+        </div>
+    </div>
+</div>
+<br>
+{% endblock %}

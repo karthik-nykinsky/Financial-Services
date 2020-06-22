@@ -1,0 +1,16 @@
+{% extends 'accounts/main.html' %}
+{% load static %}
+{% block content %}
+    <p>
+    Client Name: {{order.client.user.first_name}}<br>
+    Service Required: {{order.service_req}}<br>
+    Ordered Date: {{order.ordered_date}}<br>
+    City: {{order.city}}<br>
+    </p>
+    <form action="{% url 'Assign-Partner' order.id %}" method="POST">
+        {% csrf_token %}
+        {{form.as_p}}
+
+        <input type="submit" name="Submit">
+    </form>
+{% endblock %}

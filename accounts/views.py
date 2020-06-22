@@ -166,3 +166,35 @@ def deliverProduct(request,pk):
 	
 	return render(request, 'accounts/review-order.html', context)
 
+def manager(request):
+	if request.user is not None and request.user.is_staff:
+		sqlcommand3 = 'SELECT * from accounts_order where accounts_order.id NOT IN ( Select order_id from accounts_manage)'
+		ToBAsnd = Order.objects.raw(sqlcommand3)
+		context = {'ToBAsnd':ToBAsnd}
+		return render(request, 'accounts/manager.html', context)
+	else:
+		return HttpResponse("<h3>Permission Denied</h3>")
+
+def AssignPartner(request,pk):
+	if request.user is not None and request.user.is_staff:
+		order = Order.objects.get(id = pk)
+		#service = order.service_req
+		#partner = Partner.objects.get(services_provided = service)
+		form = PartnerSelectForm()
+		context = {'form':form, 'order':order,}
+
+		if request.method == 'POST':
+
+			form = PartnerSelectForm(request.POST)
+			if form.is_valid():
+				manage = form.save(commit=False)
+				manage.order = order
+				manage.save()
+
+				messages.success(request, "Partner assigned successfully to " + order.client.user.get_full_name())
+			return redirect('manager')
+		
+		return render(request, 'accounts/assign-partner.html', context)
+	else:
+		return HttpResponse("<h3>Permission Denied</h3>")
+

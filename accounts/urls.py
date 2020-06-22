@@ -15,4 +15,6 @@ urlpatterns = [
     path('client/create_order', views.createOrder, name='client-order'),
     path('client/view_product/<str:pk>/', views.viewProduct, name='view-product'),
     path('partner/review_order/<str:pk>/', views.deliverProduct, name='deliver-product'),
+    path('manager/assign_partner/<str:pk>/', views.AssignPartner, name='Assign-Partner'),
+    path('manager/', views.manager, name='manager'),
 ]
