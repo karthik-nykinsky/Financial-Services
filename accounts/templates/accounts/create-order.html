@@ -1,10 +1,60 @@
 {% extends 'accounts/main.html' %}
 {% load static %}
 {% block content %}
+
+<style>
+    div.form
+    {
+        display: block;
+        text-align: center;
+    }
+    form
+    {
+        display: inline-block;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+    }
+</style>
+<br>
+
+    <h3 style="text-align: center;">Order Placing</h3>
+    <br>
+    <div class="form">
     <form action="{% url 'client-order' %}" method="POST">
         {% csrf_token %}
-        {{form.as_p}}
+        <!-- {{form.as_p}} -->
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" style="background-color: #bf111a44;">Opt for a service:</span>
+                {{form.service_req}}
+            </div>
+        </div>
 
-        <input type="submit" name="Submit">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" style="background-color: #bf111a44;">City:</span>
+                {{form.city}}
+            </div>
+        </div>
+
+
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" style="background-color: #bf111a44;">Comment:</span>
+                {{form.comments}}
+            </div>
+        </div>
+        <input type="submit" class="btn btn-info" value="Place Order" name="submit">
     </form>
+    </div>
+    <script>
+
+        var form_fields = document.getElementsByTagName('input')
+        for (var field in form_fields){	
+            if(field == form_fields.length -1)
+            break;
+			form_fields[field].className += ' form-control'
+		}
+    </script>
 {% endblock %}

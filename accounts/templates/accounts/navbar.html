@@ -9,7 +9,7 @@
 </style>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
- <img src="{% static 'images/company_logo.png' %}" height="40px" width="120px">
+ <img src="{% static 'images/company_logo.jpg' %}" height="45px" width="90px">
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -17,17 +17,17 @@
     <ul class="navbar-nav">
       {% if request.user.is_partner %}
       <li class="nav-item">
-        <a class="nav-link" href="{% url 'partner' %}">Dashboard</a>
+        <a style="padding-left: 15px;" class="nav-link active hello-msg" href="{% url 'partner' %}">Dashboard</a>
       </li>
-      {% elif request.user.is_partner %}
+      {% elif request.user.is_client %}
       <li class="nav-item">
-        <a class="nav-link" href="{% url 'client' %}">Dashboard</a>
+        <a style="padding-left: 15px;" class="nav-link active hello-msg" href="{% url 'client' %}">Dashboard</a>
       </li>
       {% endif %}
     </ul>
   </div>
 
-  <span class="hello-msg">Hello, {{request.user.first_name}}</span> 
+  <span class="hello-msg">Hello, {{request.user.first_name}}!</span> 
   {% if request.user.is_client %}
   <span><a class="btn btn-sm btn-info" href="{% url 'client-logout' %}">Logout</a></span>
   {% else %}

@@ -129,7 +129,7 @@ def createOrder(request):
 			order.client = client
 			order.save()
 
-			messages.success(request, "Order added successfully for " + client.user.get_full_name())
+			messages.success(request, "Order placed successfully for " + client.user.get_full_name())
 		return redirect('client')
 	
 	return render(request, 'accounts/create-order.html', context)

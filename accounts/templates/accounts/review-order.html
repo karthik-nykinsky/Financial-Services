@@ -1,17 +1,52 @@
 {% extends 'accounts/main.html' %}
 {% load static %}
 {% block content %}
+
+<style>
+    div.form
+    {
+        display: block;
+        text-align: center;
+    }
+    form
+    {
+        display: inline-block;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+    }
+</style>
+
+<br>
     <p>
+        <h3>Order Details</h3><br>
     Client Name: {{order.client.user.first_name}}<br>
     Service Required: {{order.service_req}}<br>
     Client Comments: {{order.comments}}<br>
     Ordered Date: {{order.ordered_date}}<br>
     City: {{order.city}}<br>
     </p>
+<br><h3>Deliver Product</h3><br>
     <form action="{% url 'deliver-product' order.id %}" method="POST">
         {% csrf_token %}
-        {{form.as_p}}
 
-        <input type="submit" name="Submit">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" style="background-color: #bf111a44;">Comment:</span>
+                {{form.comments}}
+            </div>
+        </div>
+
+        <input type="submit" class="btn btn-info" value="Submit" name="submit">
     </form>
+</div>
+
+    <script>
+        var form_fields = document.getElementsByTagName('input')
+        for (var field in form_fields){	
+            if(field == form_fields.length -1)
+            break;
+			form_fields[field].className += ' form-control'
+		}
+    </script>
 {% endblock %}

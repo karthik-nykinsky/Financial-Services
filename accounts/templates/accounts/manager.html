@@ -1,13 +1,21 @@
 {% extends 'accounts/main.html' %}
 
 {% block content %}
-    
-
-
-
-
 <br>
 
+{% for message in messages|slice:":1" %}
+    {% if message is not None %}
+        <div class="row">
+            <div class="col-md">
+                <div class="alert alert-success alert-dismissible">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>Success!</strong> {{message}}.
+                </div>
+            </div>
+        </div>
+    <br>
+    {% endif %}
+{% endfor %}
 
 <div class="row">
     <div class="col-md">

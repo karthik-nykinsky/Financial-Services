@@ -1,15 +1,23 @@
 {% extends 'accounts/main.html' %}
 {% load static %}
 {% block content %}
+<br>
+<div class="card card-body">
     <p>
-        <h3>Order Description</h3>
+        <h3>Order Details</h3><br>
+    Order Id: {{order.id}}<br>
     Service Required: {{order.service_req}}<br>
     Client Comments: {{order.comments}}<br>
     Ordered Date: {{order.ordered_date}}<br>
     City: {{order.city}}<br>
-        <h3>Product</h3>
+    </p>
+</div>
+<br>
+<div class="card card-body">
+    <p>
+        <h3>Product</h3><br>
     Product: {{product.comments}}<br>
     By Partner: {{partner}}<br> 
     </p>
-    </form>
+</div>
 {% endblock %}
