@@ -1,1 +1,4 @@
 *.pyc
+.vscode
+db.sqlite/
+__pycache__/
