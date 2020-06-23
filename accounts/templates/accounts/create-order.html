@@ -21,7 +21,7 @@
     <h3 style="text-align: center;">Order Placing</h3>
     <br>
     <div class="form">
-    <form action="{% url 'client-order' %}" method="POST">
+    <form action="{% url 'client-order' %}" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <!-- {{form.as_p}} -->
         <div class="input-group mb-3">
@@ -38,11 +38,17 @@
             </div>
         </div>
 
-
         <div class="input-group mb-3">
             <div class="input-group-prepend">
                 <span class="input-group-text" style="background-color: #bf111a44;">Comment:</span>
                 {{form.comments}}
+            </div>
+        </div>
+
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" style="background-color: #bf111a44;">Upload Doc:</span>
+                {{form.documents}}
             </div>
         </div>
         <input type="submit" class="btn btn-info" value="Place Order" name="submit">
@@ -52,7 +58,7 @@
 
         var form_fields = document.getElementsByTagName('input')
         for (var field in form_fields){	
-            if(field == form_fields.length -1)
+            if(field == form_fields.length -2)
             break;
 			form_fields[field].className += ' form-control'
 		}

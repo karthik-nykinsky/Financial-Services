@@ -82,6 +82,7 @@
 					<th>Category</th>
 					<th>City</th>
 					<th>Date Orderd</th>
+					<th>Documents</th>
 				</tr>
 				{% for order in orders %}
 					<tr>
@@ -89,6 +90,7 @@
 					<td>{{order.service_req}}</td>
 					<td>{{order.city}}</td>
 					<td>{{order.ordered_date}}</td>
+					<td><a href="{{ order.documents.url }}" class="btn btn-outline-info  btn-sm btn-block" target="_blank">View Doc</a></td>
 					</tr>
 				{% endfor %}
 			</table>

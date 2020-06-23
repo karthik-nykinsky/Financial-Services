@@ -25,9 +25,10 @@
     Client Comments: {{order.comments}}<br>
     Ordered Date: {{order.ordered_date}}<br>
     City: {{order.city}}<br>
+    Docs: <a href="{{ order.documents.url }}" class="btn btn-info btn-sm" target="_blank">Document</a>
     </p>
 <br><h3>Deliver Product</h3><br>
-    <form action="{% url 'deliver-product' order.id %}" method="POST">
+    <form action="{% url 'deliver-product' order.id %}" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
 
         <div class="input-group mb-3">
@@ -37,6 +38,12 @@
             </div>
         </div>
 
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" style="background-color: #bf111a44;">Send Document:</span>
+                {{form.documents}}
+            </div>
+        </div>
         <input type="submit" class="btn btn-info" value="Submit" name="submit">
     </form>
 </div>
@@ -44,7 +51,7 @@
     <script>
         var form_fields = document.getElementsByTagName('input')
         for (var field in form_fields){	
-            if(field == form_fields.length -1)
+            if(field == form_fields.length -2)
             break;
 			form_fields[field].className += ' form-control'
 		}

@@ -137,7 +137,7 @@ class Order(models.Model):
     client = models.ForeignKey(Client, null=True, on_delete=models.SET_NULL)
     service_req = models.ForeignKey(Service, null=True, on_delete=models.SET_NULL)
     city = models.CharField(max_length=200, blank=False)
-    # documents = models.ImageField(null=True)
+    documents = models.FileField(upload_to='media',max_length=200)
     comments = models.CharField(max_length=200, null=True, blank=True)
     ordered_date = models.DateTimeField(auto_now_add=True,null=True)
 
@@ -147,5 +147,5 @@ class Manage(models.Model):
 
 class Product(models.Model):
     managed = models.ForeignKey(Manage, null=True, on_delete=models.SET_NULL)
-    # documents = models.ImageField(null=True)
+    documents = models.FileField(upload_to='media',max_length=200)
     comments = models.CharField(max_length=200, null=True, blank=True)

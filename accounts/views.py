@@ -105,7 +105,7 @@ def createOrder(request):
 
 	if request.method == 'POST':
 
-		form = CreateOrderForm(request.POST)
+		form = CreateOrderForm(request.POST, request.FILES)
 		if form.is_valid():
 			order = form.save(commit=False)
 			order.client = client
@@ -128,6 +128,15 @@ def viewProduct(request,pk):
 	return render(request, 'accounts/view-product.html', context)
 
 @partner_required
+def viewpartnerProduct(request,pk):
+	partner = Partner.objects.get(user = request.user)
+	order = Order.objects.get(id = pk)
+	sqlcommand = 'SELECT * from accounts_product where managed_id IN (SELECT id from accounts_manage where accounts_manage.order_id = %s )'
+	product = Order.objects.raw(sqlcommand,[pk])
+	context = {'client':order.client, 'order': order, 'product': product[0], 'partner': partner}
+	return render(request, 'accounts/view-product.html', context)
+
+@partner_required
 def deliverProduct(request,pk):
 	form = DeliverProductForm()
 	partner = Partner.objects.get(user = request.user)
@@ -137,7 +146,7 @@ def deliverProduct(request,pk):
 
 	if request.method == 'POST':
 
-		form = DeliverProductForm(request.POST)
+		form = DeliverProductForm(request.POST, request.FILES)
 		if form.is_valid():
 			product = form.save(commit=False)
 			product.managed = managed

@@ -1,5 +1,8 @@
 from django.urls import path
 from . import views
+from django.conf import settings
+from django.conf.urls.static import static
+
 
 
 urlpatterns = [
@@ -14,7 +17,11 @@ urlpatterns = [
     path('client/', views.client, name='client'),
     path('client/create_order', views.createOrder, name='client-order'),
     path('client/view_product/<str:pk>/', views.viewProduct, name='view-product'),
+    path('partner/view_product/<str:pk>/', views.viewpartnerProduct, name='partnerview-product'),
     path('partner/review_order/<str:pk>/', views.deliverProduct, name='deliver-product'),
     path('manager/assign_partner/<str:pk>/', views.AssignPartner, name='Assign-Partner'),
     path('manager/', views.manager, name='manager'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

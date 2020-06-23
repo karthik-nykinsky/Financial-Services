@@ -103,7 +103,7 @@
 							<th>Category</th>
 							<th>City</th>
 							<th>Date Ordered</th>
-							<th></th>
+							<th>Product Delivered</th>
 						</tr>
 						{% for order in done %}
 							<tr>
@@ -112,7 +112,7 @@
 							<td>{{order.service_req}}</td>
 							<td>{{order.city}}</td>
 							<td>{{order.ordered_date}}</td>
-							<td></td>
+							<td><a href="{% url 'partnerview-product' order.id %}" class="btn btn-outline-info  btn-sm btn-block">Product</a></td>
 							</tr>
 						{% endfor %}
 					</table>

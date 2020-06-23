@@ -10,13 +10,16 @@
     Client Comments: {{order.comments}}<br>
     Ordered Date: {{order.ordered_date}}<br>
     City: {{order.city}}<br>
+    Document: <td><a href="{{ order.documents.url }}" class="btn btn-primary btn-sm" target="_blank" style="width: 180px;">View Doc</a></td>
     </p>
 </div>
 <br>
 <div class="card card-body">
     <p>
         <h3>Product</h3><br>
-    Product: {{product.comments}}<br>
+    Document: 
+    <a href="{{ product.documents.url }}" class="btn btn-primary btn-sm" target="_blank" style="width: 180px;">Download document</a> <br>
+    Comments: {{product.comments}}<br>
     By Partner: {{partner}}<br> 
     </p>
 </div>

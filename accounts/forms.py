@@ -86,13 +86,13 @@ class CreateOrderForm(forms.ModelForm):
     
     class Meta:
         model = Order
-        fields = ['service_req', 'city', 'comments']
+        fields = ['service_req', 'city', 'comments', 'documents']
 
 class DeliverProductForm(forms.ModelForm):
     
     class Meta:
         model = Product
-        fields = ['comments']
+        fields = ['comments', 'documents']
 
 class PartnerSelectForm(forms.ModelForm):
 
