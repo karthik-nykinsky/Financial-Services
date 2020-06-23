@@ -12,24 +12,6 @@ from .models import *
 # Create your views here.
 @unauthenticated_user
 def home(request):
-
-
-	# orders = Order.objects.all()
-	# clients = Client.objects.all()
-	# total_orders_count = orders.count()
-
-	# # pending_orders = Order.objects.raw('SELECT * FROM accounts_order')
-	# mysqlcommand = 'Select * from accounts_order where accounts_order.id NOT IN ( SELECT accounts_order.id as oid from accounts_order,accounts_manage where oid=accounts_manage.order_id )'
-	# pending_orders = Order.objects.raw(mysqlcommand)
-	# print(total_orders_count)
-	# for p in pending_orders:
-	# 	print(p.city)
-	# # assigned_orders = [] #pending_orders-product
-	# # delivered_orders = [] #product
-
-	# context = {'orders': orders, 'clients':clients, 'total_orders':total_orders_count}
-	# return render(request, 'accounts/dashboard.html',context)
-
 	return render(request, 'accounts/home.html')
 
 class ClientSignUpView(CreateView):
@@ -103,7 +85,7 @@ def partner(request):
 	todo = Order.objects.raw(sqlcommand1,[partner.pk])
 	sqlcommand2 = 'SELECT * from accounts_order where accounts_order.id IN ( Select order_id from accounts_manage where id IN ( SELECT accounts_manage.id as oid from accounts_manage,accounts_product where oid=accounts_product.managed_id ) AND partner_id = %s)'
 	done = Order.objects.raw(sqlcommand2,[partner.pk])
-	context = {'partner':partner, 'todo': todo, 'done':done}
+	context = {'partner':partner, 'todo': todo, 'done':done, 'todo_no':len(todo), 'done_no':len(done)}
 	return render(request, 'accounts/partner.html', context)
 
 @client_required
