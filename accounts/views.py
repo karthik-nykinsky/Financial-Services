@@ -81,9 +81,9 @@ def PartnerlogoutPage(request):
 @partner_required
 def partner(request):
 	partner = Partner.objects.get(user = request.user)
-	sqlcommand1 = 'SELECT * from accounts_order where accounts_order.id IN ( Select order_id from accounts_manage where id NOT IN ( SELECT accounts_manage.id as oid from accounts_manage,accounts_product where oid=accounts_product.managed_id ) AND partner_id = %s)'
+	sqlcommand1 = 'SELECT * from accounts_order where accounts_order.id IN ( Select order_id from accounts_manage where id NOT IN ( SELECT accounts_manage.id from accounts_manage,accounts_product where accounts_manage.id=accounts_product.managed_id ) AND partner_id = %s)'
 	todo = Order.objects.raw(sqlcommand1,[partner.pk])
-	sqlcommand2 = 'SELECT * from accounts_order where accounts_order.id IN ( Select order_id from accounts_manage where id IN ( SELECT accounts_manage.id as oid from accounts_manage,accounts_product where oid=accounts_product.managed_id ) AND partner_id = %s)'
+	sqlcommand2 = 'SELECT * from accounts_order where accounts_order.id IN ( Select order_id from accounts_manage where id IN ( SELECT accounts_manage.id from accounts_manage,accounts_product where accounts_manage.id=accounts_product.managed_id ) AND partner_id = %s)'
 	done = Order.objects.raw(sqlcommand2,[partner.pk])
 	context = {'partner':partner, 'todo': todo, 'done':done, 'todo_no':len(todo), 'done_no':len(done)}
 	return render(request, 'accounts/partner.html', context)
@@ -92,7 +92,7 @@ def partner(request):
 def client(request):
 	client = Client.objects.get(user = request.user)
 	my_orders = Order.objects.filter(client = client)
-	sqlcommand2 = 'SELECT * from accounts_order where accounts_order.id IN ( Select order_id from accounts_manage where id IN ( SELECT accounts_manage.id as oid from accounts_manage,accounts_product where oid=accounts_product.managed_id )) AND client_id = %s'
+	sqlcommand2 = 'SELECT * from accounts_order where accounts_order.id IN ( Select order_id from accounts_manage where id IN ( SELECT accounts_manage.id from accounts_manage,accounts_product where accounts_manage.id=accounts_product.managed_id )) AND client_id = %s'
 	done = Order.objects.raw(sqlcommand2,[client.pk])
 	context = {'client':client, 'orders': my_orders, 'done':done}
 	return render(request, 'accounts/client.html', context)
