@@ -33,9 +33,19 @@
     <form action="{% url 'Assign-Partner' order.id %}" method="POST">
         {% csrf_token %}
         <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text" style="background-color: #bf111a44;">Partner :</span>
+            <!-- <div class="input-group-prepend">
+                <span class="input-group-text" style="background-color: #bf111a44;">All Partners :</span>
                 {{form.partner}}
+                <br>
+            </div> -->
+            <div class="input-group-prepend">
+                <span class="input-group-text" style="background-color: #bf111a44;">Eligible Partners :</span>
+                <select name="desired_partner" id="partner-select">
+                    <option value="">--Please choose an option--</option>
+                    {% for partner in filtered_partners %}
+                    <option value={{partner.pk}}>{{partner}}</option>
+                    {% endfor %}
+                </select>
             </div>
         </div>
 

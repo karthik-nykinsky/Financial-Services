@@ -169,16 +169,19 @@ def manager(request):
 def AssignPartner(request,pk):
 	if request.user is not None and request.user.is_staff:
 		order = Order.objects.get(id = pk)
-		#service = order.service_req
-		#partner = Partner.objects.get(services_provided = service)
+		service = order.service_req
+		filtered_partners = Partner.objects.filter(services_provided__in=[service.id])
 		form = PartnerSelectForm()
-		context = {'form':form, 'order':order,}
+		context = {'form':form,'filtered_partners':filtered_partners, 'order':order,}
 
 		if request.method == 'POST':
-
+			# print(request.POST['desired_partner'])
 			form = PartnerSelectForm(request.POST)
 			if form.is_valid():
+				
+				desired_partner = Partner.objects.get(pk = request.POST['desired_partner'])
 				manage = form.save(commit=False)
+				manage.partner = desired_partner
 				manage.order = order
 				manage.save()
 

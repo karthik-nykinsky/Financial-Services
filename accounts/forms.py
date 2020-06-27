@@ -98,4 +98,4 @@ class PartnerSelectForm(forms.ModelForm):
 
     class Meta:
         model = Manage
-        fields = ['partner']
+        fields = []

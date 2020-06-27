@@ -1,9 +1,9 @@
-## Financial Services Dependencies
+# Financial Services Dependencies
 
-# python3
+## python3
     https://www.python.org/
-# Django3
+## Django3
     pip install django
-# psycopg2
+## psycopg2
     pip install psycopg2
 
