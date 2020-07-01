@@ -156,9 +156,13 @@
 							{% if form.errors %}
 								{% for field in form %}
 									{% for error in field.errors %}
-										<div class="alert alert-danger error">
-											<strong>{{ error|escape }}!</strong>
-										</div>
+									<div class="alert alert-danger error">
+										{% if field.name == "services_provided" %}
+										<strong>Atleast 1 service must be opted</strong>
+										{% else %}
+										<strong>{{ error|escape }}!</strong>
+										{% endif %}
+									</div>
 									{% endfor %}
 								{% endfor %}
 							{% endif %}
