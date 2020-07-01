@@ -26,7 +26,9 @@ class ClientSignUpView(CreateView):
     def form_valid(self, form):
         user = form.save()
         login(self.request, user)
+        messages.success(self.request, "Account created successfully!")
         return redirect('client-login')
+		
 
 class PartnerSignUpView(CreateView):
     model = User
@@ -40,6 +42,7 @@ class PartnerSignUpView(CreateView):
     def form_valid(self, form):
         user = form.save()
         login(self.request, user)
+        messages.success(self.request, "Account created successfully!")
         return redirect('partner-login')
 
 @unauthenticated_user

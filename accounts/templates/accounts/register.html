@@ -62,6 +62,9 @@
 			box-shadow: none !important;
 			outline: 0px !important;
 		}
+		.error{
+			text-align: center;
+		}
 
 	</style>
 
@@ -149,7 +152,16 @@
 							</div>
 							{{form.password2}}
 						</div>
-                        {{form.errors}}
+						<!-- {{form.errors}} -->
+							{% if form.errors %}
+								{% for field in form %}
+									{% for error in field.errors %}
+										<div class="alert alert-danger error">
+											<strong>{{ error|escape }}!</strong>
+										</div>
+									{% endfor %}
+								{% endfor %}
+							{% endif %}
 				   		<div class="d-flex justify-content-center mt-3 login_container">
 				 			<input class="btn login_btn" type="submit" value="Register Account">
 				   		</div>
@@ -185,7 +197,7 @@
 		form_fields[l-4].placeholder='City...';
 		}
 		else
-		form_fields[4].placeholder='Phone...';
+		form_fields[4].placeholder='Phone(10 digit)..';
 		form_fields[l-3].placeholder='Enter password...';
 		form_fields[l-2].placeholder='Confirm password...';
 

@@ -2,6 +2,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from .models import *
 from django.db import transaction
+import re
 
 
 class ClientSignUpForm(forms.ModelForm):
@@ -20,6 +21,27 @@ class ClientSignUpForm(forms.ModelForm):
         model = User
         fields = ('email', 'first_name', 'last_name')
 
+    def clean_phone(self):
+        pattern = "^(9|8|7)([0-9]{9})$"
+        phone = self.cleaned_data.get("phone")
+        if phone and not re.search(pattern, phone):
+            raise forms.ValidationError("Phone No invalid")
+        return phone
+
+    def clean_first_name(self):
+        pattern = "^[A-Z|a-z]*[A-Z|a-z]$"
+        first_name = self.cleaned_data.get("first_name")
+        if first_name and not re.search(pattern, first_name):
+            raise forms.ValidationError("First name invalid")
+        return first_name
+
+    def clean_last_name(self):
+        pattern = "^[A-Z|a-z]*[A-Z|a-z]$"
+        last_name = self.cleaned_data.get("last_name")
+        if last_name and not re.search(pattern, last_name):
+            raise forms.ValidationError("Last name invalid")
+        return last_name 
+
     def clean_password2(self):
         # Check that the two password entries match
         password1 = self.cleaned_data.get("password1")
@@ -35,7 +57,6 @@ class ClientSignUpForm(forms.ModelForm):
         user.is_client = True
         user.save()
         client = Client.objects.create(user=user, phone=self.cleaned_data.get('phone'))
-        print(self.cleaned_data.get('phone'))
         return user
 
 
@@ -62,6 +83,20 @@ class PartnerSignUpForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = User
         fields = ('email', 'first_name', 'last_name', 'company', 'city')
+
+    def clean_first_name(self):
+        pattern = "^[A-Z|a-z]*[A-Z|a-z]$"
+        first_name = self.cleaned_data.get("first_name")
+        if first_name and not re.search(pattern, first_name):
+            raise forms.ValidationError("First name invalid")
+        return first_name
+
+    def clean_last_name(self):
+        pattern = "^[A-Z|a-z]*[A-Z|a-z]$"
+        last_name = self.cleaned_data.get("last_name")
+        if last_name and not re.search(pattern, last_name):
+            raise forms.ValidationError("Last name invalid")
+        return last_name   
 
     def clean_password2(self):
         # Check that the two password entries match
