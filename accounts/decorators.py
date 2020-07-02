@@ -9,7 +9,7 @@ def client_required(function=None, redirect_field_name=REDIRECT_FIELD_NAME, logi
     redirects to the log-in page if necessary.
     '''
     actual_decorator = user_passes_test(
-        lambda u: u.is_active and u.is_client,
+        lambda u: u.is_active and u.is_client and u.email_verified,
         login_url=login_url,
         redirect_field_name=redirect_field_name
     )
@@ -24,7 +24,7 @@ def partner_required(function=None, redirect_field_name=REDIRECT_FIELD_NAME, log
     redirects to the log-in page if necessary.
     '''
     actual_decorator = user_passes_test(
-        lambda u: u.is_active and u.is_partner,
+        lambda u: u.is_active and u.is_partner and u.email_verified,
         login_url=login_url,
         redirect_field_name=redirect_field_name
     )
@@ -43,4 +43,18 @@ def unauthenticated_user(view_func):
                 return redirect('manager')
         else:
             return view_func(request, *args, **kwargs)
+    return wrapper_func
+
+def mailnotverified(view_func):
+    def wrapper_func(request,*args,**kwargs):
+        if request.user.is_authenticated:
+            if request.user.email_verified:
+                if request.user.is_client:
+                    return redirect('client')
+                else:
+                    return redirect('partner')
+            else:
+                return view_func(request, *args, **kwargs)
+        else:
+            return redirect('/')
     return wrapper_func

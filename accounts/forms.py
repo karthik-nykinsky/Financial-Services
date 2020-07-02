@@ -137,3 +137,7 @@ class PartnerSelectForm(forms.ModelForm):
     class Meta:
         model = Manage
         fields = []
+
+class VerifyMailForm(forms.Form):
+    otp = forms.CharField(max_length=7)
+        fields = []
