@@ -54,7 +54,7 @@ class PartnerSignUpView(CreateView):
 		user.otp = random.randint(1000000, 9999999)
 		user.save()
 		sub = "Nykinsky One Time Password"
-		message = "Hello" + user.first_name + "\n" + "Your OTP is " + str(user.otp)
+		message = "Hello " + user.first_name + "\n" + "Your OTP is " + str(user.otp)
 		send_mail(sub, message, settings.EMAIL_HOST_USER, [user.email])
 		login(self.request, user)
 		return redirect('verify_email')
@@ -74,7 +74,7 @@ def ClientloginPage(request):
 				user.otp = random.randint(1000000, 9999999)
 				user.save()
 				sub = "Nykinsky One Time Password"
-				message = "Hello" + user.first_name + "\n" + "Your OTP is " + str(user.otp)
+				message = "Hello " + user.first_name + "\n" + "Your OTP is " + str(user.otp)
 				send_mail(sub, message, settings.EMAIL_HOST_USER, [user.email])
 				return redirect('verify_email')
 		else:
@@ -96,7 +96,7 @@ def PartnerloginPage(request):
 				user.otp = random.randint(1000000, 9999999)
 				user.save()
 				sub = "Nykinsky One Time Password"
-				message = "Hello" + user.first_name + "\n" + "Your OTP is " + str(user.otp)
+				message = "Hello " + user.first_name + "\n" + "Your OTP is " + str(user.otp)
 				send_mail(sub, message, settings.EMAIL_HOST_USER, [user.email])
 				return redirect('verify_email')
 		else:

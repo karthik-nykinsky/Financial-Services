@@ -6,11 +6,6 @@
     pip install django
 ## smtp server
     add email_server details in accounts/email_server.py
-    
-# Instructions
-
-### pip install -r requirements.txt
-
 ## psycopg2
     pip install psycopg2
 
@@ -23,5 +18,4 @@
 ### Run "python manage.py createsuperuser"
 	Create Superuser to access/manage the database 
 ### Run "python manage.py runserver"
-
 	Server runs on localhost:8000

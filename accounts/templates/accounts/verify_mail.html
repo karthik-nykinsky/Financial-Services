@@ -12,7 +12,7 @@
 		body,
 		html {
 			margin: 0;
-			padding: 0;
+			padding: 10px;
 			height: 100%;
 			background: #7abecc !important;
 		}
@@ -76,28 +76,29 @@
 
 </head>
 <body>
+	<h4 id="form-title">An OTP has been sent to your email. Please check your mail for OTP.</h4>
 	<div class="container h-100">
 		<div class="d-flex justify-content-center h-100">
 			<div class="user_card">
 				<div class="d-flex justify-content-center">
 
 
-					<h3 id="form-title">Verify Email</h3>
+					<h3 id="form-title">Email Confirmation</h3>
 				</div>
-				<div class="d-flex justify-content-center form_container">\
+				<div class="d-flex justify-content-center form_container">
 					<form method="POST">
 						{% csrf_token %}
 						<div class="input-group mb-3">
 							<div class="input-group-append">
 								<span class="input-group-text"><i class="fas fa-user"></i></span>
 							</div>
-							<input type="text" value = 'otp' name="otp" placeholder="Otp..." class="form-control">
+							<input type="text" name="otp" placeholder="Enter OTP..." class="form-control">
                         </div>
 							<div class="d-flex justify-content-center mt-3 login_container">
-				 				<input class="btn login_btn" type="submit" value="verify" name = "verify">
+				 				<input class="btn login_btn" type="submit" value="Verify" name = "verify">
 				   			</div>
                             <div class="d-flex justify-content-center mt-3 login_container">
-				 				<input class="btn login_btn" type="submit" name = "send_new" value = "send_new">
+				 				<input class="btn login_btn" type="submit" name = "send_new" value = "Send new">
 				   			</div>
 					</form>
 				</div>
