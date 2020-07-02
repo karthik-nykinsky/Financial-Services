@@ -73,8 +73,13 @@
 	<div class="container h-100">
 		<div class="d-flex justify-content-center h-100">
 			<div class="user_card">
-				<div class="d-flex justify-content-center">
-					<h3 id="form-title">REGISTER ACCOUNT</h3>
+				<div class="d-flex justify-content-center" style="text-align: center;">
+					{%if user_type == 'partner' %}
+					<h3 id="form-title">PARTNER
+					{% else %}
+					<h3 id="form-title">CLIENT
+					{% endif %}
+					<br>REGISTER ACCOUNT</h3>
 				</div>
 				<div class="d-flex justify-content-center form_container">
 					{%if user_type == 'partner' %}
@@ -83,16 +88,6 @@
 					<form form method="POST" action="/register/client">
 					{% endif %}
 						{% csrf_token %}
-						<!-- {% for f in form %}
-						<div class="input-group mb-3">
-							<div class="input-group-append">
-								<span class="input-group-text"><i class="fas fa-user"></i></span>
-							</div>
-							{{f}}
-						</div>
-						{% endfor %} -->
-						<!-- {{form.as_p}} -->
-						<!-- {{form.phone}} -->
 						<div class="input-group mb-3">
 							<div class="input-group-append">
 								<span class="input-group-text"><i class="fas fa-user"></i></span>
@@ -126,18 +121,24 @@
 							</div>
 							{{form.company}}
 						</div>
-						<!-- <div class="input-group mb-2">
-							<div class="input-group-append">
-								<span class="fa-li"><i class="fas fa-square"></i></span>
-								{{form.services_provided}}
-							</div>
-						</div> -->
+						<label> <strong> Services Provided: </strong></label>
 						{{form.services_provided}}
 						<div class="input-group mb-2">
 							<div class="input-group-append">
 								<span class="input-group-text"><i class="fas fa-city"></i></span>
 							</div>
-							{{form.city}}
+							<!-- {{form.city}} -->
+							<input list="cities" id="city-choice" name="city" />
+
+								<datalist id="cities">
+									<option value="Ahmedabad">
+									<option value="Bangalore">
+									<option value="Chennai">
+									<option value="Hyderabad">
+									<option value="Lucknow">
+									<option value="Mumbai">
+									<option value="New Delhi">
+								</datalist>
 						</div>
 						{% endif %}
 						<div class="input-group mb-2">
