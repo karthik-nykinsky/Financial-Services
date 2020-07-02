@@ -6,7 +6,7 @@
     pip install django
 ## mysql
     add mysql server details in accounts/database.py
-##smtp server
+## smtp server
     add email_server details in accounts/email_server.py
 # Instructions
 
