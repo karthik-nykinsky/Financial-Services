@@ -21,6 +21,7 @@ urlpatterns = [
     path('partner/review_order/<str:pk>/', views.deliverProduct, name='deliver-product'),
     path('manager/assign_partner/<str:pk>/', views.AssignPartner, name='Assign-Partner'),
     path('manager/', views.manager, name='manager'),
+    path('verify_email/', views.verify_email, name= 'verify_email'),
 ]
 
 if settings.DEBUG:

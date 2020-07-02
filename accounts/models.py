@@ -25,6 +25,7 @@ class UserManager(BaseUserManager):
             email=self.normalize_email(email),
             first_name=first_name,
             last_name=last_name,
+            email_verified = False,
         )
 
         user.set_password(password)
@@ -48,6 +49,7 @@ class UserManager(BaseUserManager):
         user.is_client = False
         user.is_partner = False
         user.is_superuser = True
+        user.email_verified = True
         user.save(using=self._db)
         return user
 
@@ -62,6 +64,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(_('last name'), max_length=150, blank=True)
     is_client = models.BooleanField(default=False)
     is_partner = models.BooleanField(default=False)
+    otp = models.IntegerField(null=True)
+    email_verified = models.BooleanField(default=False)
     is_active = models.BooleanField(
         _('active'),
         default=True,
