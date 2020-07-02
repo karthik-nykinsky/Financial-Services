@@ -22,7 +22,7 @@ class ClientSignUpForm(forms.ModelForm):
         fields = ('email', 'first_name', 'last_name')
 
     def clean_phone(self):
-        pattern = "^(9|8|7)([0-9]{9})$"
+        pattern = "^(9|8|7|6)([0-9]{9})$"
         phone = self.cleaned_data.get("phone")
         if phone and not re.search(pattern, phone):
             raise forms.ValidationError("Phone No invalid")
@@ -46,8 +46,11 @@ class ClientSignUpForm(forms.ModelForm):
         # Check that the two password entries match
         password1 = self.cleaned_data.get("password1")
         password2 = self.cleaned_data.get("password2")
-        if password1 and password2 and password1 != password2:
-            raise forms.ValidationError("Passwords do not match")
+        if password1 and password2:
+            if password1 != password2:
+                raise forms.ValidationError("Passwords do not match")
+            elif len(password1)<8:
+                raise forms.ValidationError("Password needs min 8 characters")
         return password2
 
     @transaction.atomic
@@ -137,3 +140,4 @@ class PartnerSelectForm(forms.ModelForm):
 
 class VerifyMailForm(forms.Form):
     otp = forms.CharField(max_length=7)
+        fields = []

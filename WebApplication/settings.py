@@ -85,15 +85,12 @@ from accounts.database import *
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': NAME,
-        'USER': USER,
-        'PASSWORD': PASSWORD,
-        'HOST': HOST,
-        'PORT': PORT,
-        'OPTIONS': {
-        'init_command':"SET sql_mode = 'STRICT_TRANS_TABLES'"
-        }
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'Financial-Services',
+        'USER': 'postgres',
+        'PASSWORD': '1234',
+        'HOST':'localhost',
+        'PORT':'5432'
     }
 }
 

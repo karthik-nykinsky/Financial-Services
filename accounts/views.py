@@ -20,6 +20,7 @@ def home(request):
 	return render(request, 'accounts/home.html')
 
 class ClientSignUpView(CreateView):
+
 	model = User
 	form_class = ClientSignUpForm
 	template_name = 'accounts/register.html'
