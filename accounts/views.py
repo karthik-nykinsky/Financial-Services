@@ -142,7 +142,9 @@ def createOrder(request):
 			order.client = client
 			order.save()
 			messages.success(request, "Order placed successfully for " + client.user.get_full_name())
-		return redirect('client')
+			return redirect('client')
+		else :
+			messages.error(request, 'Only pdf or docx files can be uploaded')
 	
 	return render(request, 'accounts/create-order.html', context)
 
