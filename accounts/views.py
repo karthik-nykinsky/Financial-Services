@@ -15,7 +15,6 @@ from WebApplication import settings
 import time
 
 # Create your views here.
-@unauthenticated_user
 def home(request):
 	return render(request, 'accounts/home.html')
 
@@ -34,7 +33,7 @@ class ClientSignUpView(CreateView):
 		user.otp = random.randint(1000000, 9999999)
 		user.save()
 		sub = "Nykinsky One Time Password"
-		message = "Hello" + user.first_name + "\n" + "Your OTP is " + str(user.otp)
+		message = "Hello " + user.first_name + "\n" + "Your OTP is " + str(user.otp)
 		send_mail(sub, message, settings.EMAIL_HOST_USER, [user.email])
 		login(self.request, user)
 		return redirect('verify_email')
@@ -59,7 +58,6 @@ class PartnerSignUpView(CreateView):
 		login(self.request, user)
 		return redirect('verify_email')
 
-@unauthenticated_user
 def ClientloginPage(request):
 	if request.method == 'POST':
 		email = request.POST.get('email')
@@ -81,7 +79,6 @@ def ClientloginPage(request):
 			messages.info(request, 'Email-id or Password Incorrect')
 	return render(request, 'accounts/login.html', {'user_type':'client'})
 
-@unauthenticated_user
 def PartnerloginPage(request):
 	if request.method == 'POST':
 		email = request.POST.get('email')
