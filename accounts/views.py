@@ -115,8 +115,25 @@ def partner(request):
 	todo = Order.objects.raw(sqlcommand1,[partner.pk])
 	sqlcommand2 = 'SELECT * from accounts_order where accounts_order.id IN ( Select order_id from accounts_manage where id IN ( SELECT accounts_manage.id from accounts_manage,accounts_product where accounts_manage.id=accounts_product.managed_id ) AND partner_id = %s)'
 	done = Order.objects.raw(sqlcommand2,[partner.pk])
-	context = {'partner':partner, 'todo': todo, 'done':done, 'todo_no':len(todo), 'done_no':len(done)}
+	context = {'partner':partner, 'todo_no':len(todo), 'done_no':len(done)}
 	return render(request, 'accounts/partner.html', context)
+
+@partner_required
+def partnerpendingorders(request):
+	partner = Partner.objects.get(user = request.user)
+	sqlcommand1 = 'SELECT * from accounts_order where accounts_order.id IN ( Select order_id from accounts_manage where id NOT IN ( SELECT accounts_manage.id from accounts_manage,accounts_product where accounts_manage.id=accounts_product.managed_id ) AND partner_id = %s)'
+	todo = Order.objects.raw(sqlcommand1,[partner.pk])
+	context = { 'todo': todo}
+	return render(request, 'accounts/partner-pendingorders.html', context)
+
+@partner_required
+def partnerdeliveredorders(request):
+	partner = Partner.objects.get(user = request.user)
+	sqlcommand2 = 'SELECT * from accounts_order where accounts_order.id IN ( Select order_id from accounts_manage where id IN ( SELECT accounts_manage.id from accounts_manage,accounts_product where accounts_manage.id=accounts_product.managed_id ) AND partner_id = %s)'
+	done = Order.objects.raw(sqlcommand2,[partner.pk])
+	context = { 'done': done}
+	return render(request, 'accounts/partner-deliveredorders.html', context)
+
 
 @client_required
 def client(request):
@@ -126,6 +143,21 @@ def client(request):
 	done = Order.objects.raw(sqlcommand2,[client.pk])
 	context = {'client':client, 'orders': my_orders, 'done':done}
 	return render(request, 'accounts/client.html', context)
+
+@client_required
+def clientorders(request):
+	client = Client.objects.get(user = request.user)
+	my_orders = Order.objects.filter(client = client)
+	context = {'orders': my_orders}
+	return render(request, 'accounts/client-orders.html', context)
+
+@client_required
+def clientdeliveredorders(request):
+	client = Client.objects.get(user = request.user)
+	sqlcommand2 = 'SELECT * from accounts_order where accounts_order.id IN ( Select order_id from accounts_manage where id IN ( SELECT accounts_manage.id from accounts_manage,accounts_product where accounts_manage.id=accounts_product.managed_id )) AND client_id = %s'
+	done = Order.objects.raw(sqlcommand2,[client.pk])
+	context = {'done':done}
+	return render(request, 'accounts/client-deliveredorders.html', context)
 
 @client_required
 def createOrder(request):

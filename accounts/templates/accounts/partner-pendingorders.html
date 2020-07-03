@@ -1,0 +1,34 @@
+{%  extends 'accounts/main.html' %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-md">
+        <div class="card card-body">
+            <h5>My Pending Orders:</h5>
+            <table class="table table-sm">
+                <tr>
+                    <th>Order Id</th>
+                    <th>Client</th>
+                    <th>Category</th>
+                    <th>City</th>
+                    <th>Date Ordered</th>
+                    <th></th>
+                </tr>
+                {% for order in todo %}
+                    <tr>
+                    <td>{{order.id}}</td>
+                    <td>{{order.client.user.first_name}}</td>
+                    <td>{{order.service_req}}</td>
+                    <td>{{order.city}}</td>
+                    <td>{{order.ordered_date}}</td>
+                    <td>
+                        <a class="btn btn-outline-info  btn-sm btn-block" href="{% url 'deliver-product' order.id %}">Review Order</a>
+                    </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock content %}

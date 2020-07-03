@@ -22,6 +22,10 @@ urlpatterns = [
     path('manager/assign_partner/<str:pk>/', views.AssignPartner, name='Assign-Partner'),
     path('manager/', views.manager, name='manager'),
     path('verify_email/', views.verify_email, name= 'verify_email'),
+    path('partner-pendingorders/',views.partnerpendingorders, name= 'partner-pendingorders'),
+    path('partner-deliveredorders/',views.partnerdeliveredorders, name= 'partner-deliveredorders'),
+    path('client-orders/',views.clientorders, name= 'client-orders'),
+    path('client-deliveredorders/',views.clientdeliveredorders, name= 'client-deliveredorders'),
 ]
 
 if settings.DEBUG:

@@ -72,60 +72,14 @@
 </div>
 <br> -->
 
-<div class="row">
-	<div class="col-md">
-		<div class="card card-body">
-			<h5>My Orders:</h5>
-			<table class="table table-sm">
-				<tr>
-					<th>Order ID</th>
-					<th>Category</th>
-					<th>City</th>
-					<th>Date Orderd</th>
-					<th>Documents</th>
-				</tr>
-				{% for order in orders %}
-					<tr>
-					<td>{{order.id}}</td>
-					<td>{{order.service_req}}</td>
-					<td>{{order.city}}</td>
-					<td>{{order.ordered_date}}</td>
-					<td><a href="{{ order.documents.url }}" class="btn btn-outline-info  btn-sm btn-block" target="_blank">View Doc</a></td>
-					</tr>
-				{% endfor %}
-			</table>
-		</div>
-	</div>
-</div>
+
 
 <br>
 
-<div class="row">
-	<div class="col-md">
-		<div class="card card-body">
-			<h5>Delivered Products:</h5>
-			<table class="table table-sm">
-				<tr>
-					<th>Order ID</th>
-					<th>Category</th>
-					<th>City</th>
-					<th>Date Ordered</th>
-					<th>Product</th>
-				</tr>
-				{% for order in done %}
-					<tr>
-					<td>{{order.id}}</td>
-					<td>{{order.service_req}}</td>
-					<td>{{order.city}}</td>
-					<td>{{order.ordered_date}}</td>
-					<td>
-						<a class="btn btn-outline-info  btn-sm btn-block" href="{% url 'view-product' order.id %}">view product</a>
-					</td>
-					</tr>
-				{% endfor %}
-			</table>
-		</div>
-	</div>
-</div>
-
+<td>
+	<a class="btn btn-outline-info  btn-sm btn-block" href="{% url 'client-orders' %}">My Orders</a>
+</td>
+<td>
+	<a class="btn btn-outline-info  btn-sm btn-block" href="{% url 'client-deliveredorders' %}">Delivered Orders</a>
+</td>
 {% endblock %}
