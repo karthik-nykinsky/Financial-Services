@@ -4,8 +4,6 @@
     https://www.python.org/
 ## Django3
     pip install django
-## smtp server
-    add email_server details in accounts/email_server.py
 ## psycopg2
     pip install psycopg2
 
