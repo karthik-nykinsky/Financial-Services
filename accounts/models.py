@@ -3,6 +3,7 @@ from django.contrib.auth.models import (
 )
 from django.db import models
 from django.utils import timezone
+from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
 
@@ -136,12 +137,19 @@ class Partner(models.Model):
 
     def __str__(self):
         return self.company
+    
+def validate_file_extension(value):
+    import os
+    ext = os.path.splitext(value.name)[1]
+    valid_extensions = ['.pdf','.doc','.docx']
+    if not ext in valid_extensions:
+        raise ValidationError(u'File not supported!')
 
 class Order(models.Model):
     client = models.ForeignKey(Client, null=True, on_delete=models.SET_NULL)
     service_req = models.ForeignKey(Service, null=True, on_delete=models.SET_NULL)
     city = models.CharField(max_length=200, blank=False)
-    documents = models.FileField(upload_to='media',max_length=200)
+    documents = models.FileField(upload_to='media',max_length=200,validators=[validate_file_extension])
     comments = models.CharField(max_length=200, null=True, blank=True)
     ordered_date = models.DateTimeField(auto_now_add=True,null=True)
 
@@ -151,5 +159,5 @@ class Manage(models.Model):
 
 class Product(models.Model):
     managed = models.ForeignKey(Manage, null=True, on_delete=models.SET_NULL)
-    documents = models.FileField(upload_to='media',max_length=200)
+    documents = models.FileField(upload_to='media',max_length=200,validators=[validate_file_extension])
     comments = models.CharField(max_length=200, null=True, blank=True)
