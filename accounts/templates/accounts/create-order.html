@@ -51,6 +51,9 @@
                 {{form.documents}}
             </div>
         </div>
+	{% for message in messages|%}
+		<p>{{message}}</p>
+	{% endfor %}
         <input type="submit" class="btn btn-info" value="Place Order" name="submit">
     </form>
     </div>
