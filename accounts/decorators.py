@@ -45,6 +45,15 @@ def unauthenticated_user(view_func):
             return view_func(request, *args, **kwargs)
     return wrapper_func
 
+def super_user(view_func):
+    def wrapper_func(request, *args, **kwargs):
+        if request.user.is_staff:
+            return redirect('manager')
+        else :
+            return view_func(request, *args, **kwargs)
+    return wrapper_func
+
+
 def mailnotverified(view_func):
     def wrapper_func(request,*args,**kwargs):
         if request.user.is_authenticated:

@@ -15,6 +15,7 @@ from WebApplication import settings
 import time
 
 # Create your views here.
+@super_user
 def home(request):
 	return render(request, 'accounts/home.html')
 
