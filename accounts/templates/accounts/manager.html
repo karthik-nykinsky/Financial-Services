@@ -54,15 +54,13 @@
                     <th>Company</th>
                     <th>City</th>
                     <th>Approve Partner</th>
-                    <th>Disapprove Partner</th>
                 {% for p in partners %}
                 <tr>
                     <td>{{p.user.id}}</td>
                     <td>{{p.user.first_name}}</td>
                     <td>{{p.company}}</td>
                     <td>{{p.city}}</td>
-                    <td><a class="btn btn-outline-info  btn-sm btn-block" href="{% url 'Approve-Partner' p.user.id %}">Approve-Partner</a></td>
-                    <td><a class="btn btn-outline-info  btn-sm btn-block" href="{% url 'Disapprove-Partner' p.user.id %}">Disapprove-Partner</a></td>
+                    <td><a class="btn btn-outline-info  btn-sm btn-block" href="{% url 'Approve-Partner-Page' p.user.id %}">Approve-Partner</a></td>
                  {% endfor %}
                 </tr>
 

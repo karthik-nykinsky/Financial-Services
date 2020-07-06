@@ -1,0 +1,32 @@
+{% extends 'accounts/main.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+    div.form
+    {
+        display: block;
+        text-align: center;
+    }
+    form
+    {
+        display: inline-block;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+    }
+</style>
+
+<br>
+    <p>
+        <h3>Partner Details</h3><br>
+    Partner Name: {{partner.user.first_name}}<br>
+    Company: {{partner.company}}<br>
+    City: {{partner.city}}<br>
+    </p>
+<br>
+
+<td><a class="btn btn-outline-info  btn-sm btn-block" href="{% url 'Approve-Partner' partner.user.id %}">Approve-Partner</a></td>
+<td><a class="btn btn-outline-info  btn-sm btn-block" href="{% url 'Disapprove-Partner' partner.user.id %}">Disapprove-Partner</a></td>
+
+{% endblock %}
