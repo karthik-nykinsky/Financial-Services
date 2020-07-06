@@ -22,10 +22,13 @@ urlpatterns = [
     path('manager/assign_partner/<str:pk>/', views.AssignPartner, name='Assign-Partner'),
     path('manager/', views.manager, name='manager'),
     path('verify_email/', views.verify_email, name= 'verify_email'),
-    path('partner-pendingorders/',views.partnerpendingorders, name= 'partner-pendingorders'),
-    path('partner-deliveredorders/',views.partnerdeliveredorders, name= 'partner-deliveredorders'),
-    path('client-orders/',views.clientorders, name= 'client-orders'),
-    path('client-deliveredorders/',views.clientdeliveredorders, name= 'client-deliveredorders'),
+    path('partner/partner-pendingorders/',views.partnerpendingorders, name= 'partner-pendingorders'),
+    path('partner/partner-deliveredorders/',views.partnerdeliveredorders, name= 'partner-deliveredorders'),
+    path('client/client-orders/',views.clientorders, name= 'client-orders'),
+    path('client/client-deliveredorders/',views.clientdeliveredorders, name= 'client-deliveredorders'),
+    path('manager/approve_partner/<str:pk>/',views.approvepartner, name='Approve-Partner'),
+    path('manager/disapprove_partner/<str:pk>/',views.disapprovepartner, name='Disapprove-Partner'),
+    path('manager/dismiss_partner/<str:pk>/',views.dismisspartner, name='Dismiss-Partner'),
 ]
 
 if settings.DEBUG:
