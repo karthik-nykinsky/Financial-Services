@@ -134,6 +134,7 @@ class Partner(models.Model):
     city = models.CharField(max_length=200)
     services_provided = models.ManyToManyField(Service)
     description = models.CharField(max_length=200, null=True, blank=True)
+    is_approved = models.BooleanField(default=False)
 
     def __str__(self):
         return self.company
