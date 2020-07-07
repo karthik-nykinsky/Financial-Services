@@ -25,6 +25,7 @@ urlpatterns = [
     path('partner/partner-pendingorders/',views.partnerpendingorders, name= 'partner-pendingorders'),
     path('partner/partner-deliveredorders/',views.partnerdeliveredorders, name= 'partner-deliveredorders'),
     path('client/client-orders/',views.clientorders, name= 'client-orders'),
+    path('client-profile/',views.clientprofile, name= 'client-profile'),
     path('client/client-deliveredorders/',views.clientdeliveredorders, name= 'client-deliveredorders'),
     path('manager/approve_partner_page/<str:pk>/',views.approvepartnerpage, name='Approve-Partner-Page'),
     path('manager/approve_partner_page/disapprove_partner/<str:pk>/',views.disapprovepartner, name='Disapprove-Partner'),

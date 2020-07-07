@@ -170,6 +170,37 @@ def clientdeliveredorders(request):
 	return render(request, 'accounts/client-deliveredorders.html', context)
 
 @client_required
+def clientprofile(request):
+	client = Client.objects.get(user = request.user)
+	#profile = Clientprofile.objects.get(client = client)
+	form = clientprofileform()
+	context = {'form':form}
+	if request.method == 'POST':
+		form = clientprofileform(request.POST,request.FILES)
+		# form.logo = request.FILES.logo
+		# form.Official_photo = request.FILES.Official_photo
+		# form.Aadhar_card = request.FILES.Aadhar_card
+		# form.Pan_card = request.FILES.Pan_card
+		# form.Certificate_of_Inc = request.FILES.Certificate_of_Inc
+		# form.Company_Pan_card = request.FILES.Company_Pan_card
+		# form.Payment_slip = request.FILES.Payment_slip
+		# form.TAN_Document = request.FILES.TAN_Document
+		print(dir(form))
+		if form.is_valid():
+			print('after valid')
+			clientprfl = form.save(commit=False)
+			clientprfl.client = client
+			clientprfl.save()
+			messages.success(request, "Profile updated successfully for " + client.user.get_full_name())
+			return redirect('client')
+		else :
+			messages.error(request, 'Only pdf or docx files can be uploaded in file fields and jpeg or png files can only be uploaded in image field')
+	
+	return render(request, 'accounts/client-profile.html', context)
+
+
+
+@client_required
 def createOrder(request):
 	form = CreateOrderForm()
 	context = {'form':form}
@@ -251,6 +282,7 @@ def approvepartnerpage(request,pk):
 	if request.user is not None and request.user.is_staff:
 		user=User.objects.get(id=pk)
 		partner = Partner.objects.get(user=user)
+		services = partner.services_provided
 		context = {'partner':partner}
 		return render(request,'accounts/approve-partner.html',context)
 	else:

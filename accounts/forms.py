@@ -143,3 +143,9 @@ class VerifyMailForm(forms.Form):
     
     class Meta:
         fields = []
+
+class clientprofileform(forms.ModelForm):
+
+    class Meta:
+        model = Clientprofile
+        fields = '__all__'
