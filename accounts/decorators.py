@@ -1,6 +1,7 @@
 from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.contrib.auth.decorators import user_passes_test
 from django.shortcuts import redirect
+from .models import *
 
 def client_required(function=None, redirect_field_name=REDIRECT_FIELD_NAME, login_url='client-login'):
     '''
@@ -44,6 +45,23 @@ def unauthenticated_user(view_func):
             return view_func(request, *args, **kwargs)
     return wrapper_func
 
+def profile_update_required(view_func):
+    def wrapper_func(request, *args, **kwargs):
+        if request.user.is_partner:
+            partner = Partner.objects.get(user = request.user)
+            profile = Partnerprofile.objects.filter(partner = partner)
+            if profile.exists() :
+                return view_func(request, *args, **kwargs)
+            else:
+                return redirect('partner-profile')
+        elif request.user.is_client:
+            client = Client.objects.get(user = request.user)
+            profile = Clientprofile.objects.filter(client = client)
+            if profile.exists() :
+                return view_func(request, *args, **kwargs)
+            else:
+                return redirect('client-profile')
+    return wrapper_func
 
 def super_user(view_func):
     def wrapper_func(request, *args, **kwargs):

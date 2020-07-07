@@ -119,7 +119,7 @@ class Service(models.Model):
     name = models.CharField(max_length=100, blank=False)
     
     def __str__(self):
-        return self.name
+        return self.name 
 
 class Client(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
@@ -127,6 +127,24 @@ class Client(models.Model):
 
     def __str__(self):
         return self.user.get_full_name()
+
+def validate_file_extension(value):
+    import os
+    ext = os.path.splitext(value.name)[1]
+    valid_extensions = ['.pdf','.doc','.docx']
+    if not ext in valid_extensions:
+        raise ValidationError(u'File not supported!')
+
+class Clientprofile(models.Model):
+    client = models.ForeignKey(Client, null=True, on_delete=models.SET_NULL)
+    logo = models.ImageField(upload_to='media',max_length=200)
+    Official_photo = models.ImageField(upload_to='media',max_length=200)
+    Aadhar_card = models.FileField(upload_to='media',max_length=200,validators=[validate_file_extension])
+    Pan_card = models.FileField(upload_to='media',max_length=200,validators=[validate_file_extension])
+    Certificate_of_Inc = models.FileField(upload_to='media',max_length=200,validators=[validate_file_extension])
+    Company_Pan_card = models.FileField(upload_to='media',max_length=200,validators=[validate_file_extension])
+    Payment_slip = models.FileField(upload_to='media',max_length=200,validators=[validate_file_extension])
+    TAN_Document = models.FileField(upload_to='media',max_length=200,validators=[validate_file_extension])
 
 class Partner(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
@@ -138,13 +156,16 @@ class Partner(models.Model):
 
     def __str__(self):
         return self.company
-    
-def validate_file_extension(value):
-    import os
-    ext = os.path.splitext(value.name)[1]
-    valid_extensions = ['.pdf','.doc','.docx']
-    if not ext in valid_extensions:
-        raise ValidationError(u'File not supported!')
+
+class Partnerprofile(models.Model):
+    partner = models.ForeignKey(Partner, null=True, on_delete=models.SET_NULL)
+    Official_photo = models.ImageField(upload_to='media')
+    Aadhar_card = models.FileField(upload_to='media',max_length=200,validators=[validate_file_extension])
+    Pan_card = models.FileField(upload_to='media',max_length=200,validators=[validate_file_extension])
+    Work_experience = models.FileField(upload_to='media',max_length=200,validators=[validate_file_extension])
+    Payment_slip = models.FileField(upload_to='media',max_length=200,validators=[validate_file_extension])
+    Educational_certificate = models.FileField(upload_to='media',max_length=200,validators=[validate_file_extension])
+
 
 class Order(models.Model):
     client = models.ForeignKey(Client, null=True, on_delete=models.SET_NULL)

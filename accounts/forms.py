@@ -143,3 +143,15 @@ class VerifyMailForm(forms.Form):
     
     class Meta:
         fields = []
+
+class clientprofileform(forms.ModelForm):
+
+    class Meta:
+        model = Clientprofile
+        fields = ['logo','Official_photo','Aadhar_card','Pan_card','Certificate_of_Inc','Company_Pan_card','Payment_slip','TAN_Document']
+
+class partnerprofileform(forms.ModelForm):
+
+    class Meta:
+        model = Partnerprofile
+        fields = ['Official_photo','Aadhar_card','Pan_card','Work_experience','Payment_slip','Educational_certificate']
