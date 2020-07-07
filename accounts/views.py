@@ -251,7 +251,7 @@ def approvepartnerpage(request,pk):
 	if request.user is not None and request.user.is_staff:
 		user=User.objects.get(id=pk)
 		partner = Partner.objects.get(user=user)
-		context = {'partner':partner}
+		context = {'partner':partner, 'services':partner.services_provided.all()}
 		return render(request,'accounts/approve-partner.html',context)
 	else:
 		return HttpResponse("<h3>Permission Denied</h3>")
@@ -267,14 +267,6 @@ def approvepartner(request,pk):
 		return HttpResponse("<h3>Permission Denied</h3>")
 
 def disapprovepartner(request,pk):
-	if request.user is not None and request.user.is_staff:
-		partner=User.objects.get(id=pk)
-		partner.delete()
-		return redirect('manager')
-	else:
-		return HttpResponse("<h3>Permission Denied</h3>")
-
-def dismisspartner(request,pk):
 	if request.user is not None and request.user.is_staff:
 		partner=User.objects.get(id=pk)
 		partner.delete()
