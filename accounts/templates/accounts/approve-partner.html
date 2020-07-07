@@ -20,14 +20,14 @@
 <br>
     <p>
         <h3>Partner Details</h3><br>
-    Partner Name: {{partner.user.first_name}}<br>
-    Company: {{partner.company}}<br>
-    City: {{partner.city}}<br>
-    service : {{partner.services_provided}}<br>
+    <strong>Partner Name: </strong>{{partner.user.first_name}}<br>
+    <strong>Company: </strong>{{partner.company}}<br>
+    <strong>City: </strong>{{partner.city}}<br>
+    <strong>Services: </strong>{% for service in services %}  {{service}},  {% endfor %}
     </p>
 <br>
 
 <td><a class="btn btn-outline-info  btn-sm btn-block" href="{% url 'Approve-Partner' partner.user.id %}">Approve-Partner</a></td>
-<td><a class="btn btn-outline-info  btn-sm btn-block" href="{% url 'Disapprove-Partner' partner.user.id %}">Disapprove-Partner</a></td>
+<td><a class="btn btn-outline-danger  btn-sm btn-block" href="{% url 'Disapprove-Partner' partner.user.id %}">Disapprove-Partner</a></td>
 
 {% endblock %}

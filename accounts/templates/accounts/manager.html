@@ -60,7 +60,7 @@
                     <td>{{p.user.first_name}}</td>
                     <td>{{p.company}}</td>
                     <td>{{p.city}}</td>
-                    <td><a class="btn btn-outline-info  btn-sm btn-block" href="{% url 'Approve-Partner-Page' p.user.id %}">Approve-Partner</a></td>
+                    <td><a class="btn btn-outline-info  btn-sm btn-block" href="{% url 'Approve-Partner-Page' p.user.id %}">View-Partner</a></td>
                  {% endfor %}
                 </tr>
 
@@ -86,7 +86,7 @@
                     <td>{{p.user.first_name}}</td>
                     <td>{{p.company}}</td>
                     <td>{{p.city}}</td>
-                    <td><a class="btn btn-outline-info  btn-sm btn-block" href="{% url 'Dismiss-Partner' p.user.id %}">Dismiss the Partner</a></td>
+                    <td><a class="btn btn-outline-danger  btn-sm btn-block" href="{% url 'Dismiss-Partner' p.user.id %}">Dismiss the Partner</a></td>
                  {% endfor %}
                 </tr>
 

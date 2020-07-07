@@ -110,6 +110,7 @@ def PartnerlogoutPage(request):
 	return redirect('partner-login')
 
 @partner_required
+@profile_update_required
 def partner(request):
 	partner = Partner.objects.get(user = request.user)
 	if partner.is_approved:
@@ -144,8 +145,39 @@ def partnerdeliveredorders(request):
 	else :
 		return render(request,'accounts/temporary-partner.html')
 
+@partner_required
+def partnerprofile(request):
+	partner = Partner.objects.get(user = request.user)
+	try :
+		profile = Partnerprofile.objects.get(partner = partner) 
+		form = partnerprofileform(instance = profile)
+		if request.method == 'POST':
+			form = partnerprofileform(request.POST,request.FILES,instance=profile)
+			if form.is_valid():
+				partnerprfl = form.save(commit=False)
+				partnerprfl.partner = partner
+				partnerprfl.save()
+				messages.success(request, "Profile updated successfully for " + partner.user.get_full_name())
+				return redirect('partner')
+			else :
+				messages.error(request, 'Only pdf or docx files can be uploaded in file fields and jpeg or png files can only be uploaded in image field')
+	except :
+		form = partnerprofileform()
+		if request.method == 'POST':
+			form = partnerprofileform(request.POST,request.FILES)
+			if form.is_valid():
+				partnerprfl = form.save(commit=False)
+				partnerprfl.partner = partner
+				partnerprfl.save()
+				messages.success(request, "Profile updated successfully for " + partner.user.get_full_name())
+				return redirect('partner')
+			else :
+				messages.error(request, 'Only pdf or docx files can be uploaded in file fields and jpeg or png files can only be uploaded in image field')
+	context = {'form':form}
+	return render(request, 'accounts/partner-profile.html', context)
 
 @client_required
+@profile_update_required
 def client(request):
 	client = Client.objects.get(user = request.user)
 	my_orders = Order.objects.filter(client = client)
@@ -172,30 +204,32 @@ def clientdeliveredorders(request):
 @client_required
 def clientprofile(request):
 	client = Client.objects.get(user = request.user)
-	#profile = Clientprofile.objects.get(client = client)
-	form = clientprofileform()
+	try :
+		profile = Clientprofile.objects.get(client = client) 
+		form = clientprofileform(instance = profile)
+		if request.method == 'POST':
+			form = clientprofileform(request.POST,request.FILES,instance=profile)
+			if form.is_valid():
+				clientprfl = form.save(commit=False)
+				clientprfl.client = client
+				clientprfl.save()
+				messages.success(request, "Profile updated successfully for " + client.user.get_full_name())
+				return redirect('client')
+			else :
+				messages.error(request, 'Only pdf or docx files can be uploaded in file fields and jpeg or png files can only be uploaded in image field')
+	except :
+		form = clientprofileform()
+		if request.method == 'POST':
+			form = clientprofileform(request.POST,request.FILES)
+			if form.is_valid():
+				clientprfl = form.save(commit=False)
+				clientprfl.client = client
+				clientprfl.save()
+				messages.success(request, "Profile updated successfully for " + client.user.get_full_name())
+				return redirect('client')
+			else :
+				messages.error(request, 'Only pdf or docx files can be uploaded in file fields and jpeg or png files can only be uploaded in image field')
 	context = {'form':form}
-	if request.method == 'POST':
-		form = clientprofileform(request.POST,request.FILES)
-		# form.logo = request.FILES.logo
-		# form.Official_photo = request.FILES.Official_photo
-		# form.Aadhar_card = request.FILES.Aadhar_card
-		# form.Pan_card = request.FILES.Pan_card
-		# form.Certificate_of_Inc = request.FILES.Certificate_of_Inc
-		# form.Company_Pan_card = request.FILES.Company_Pan_card
-		# form.Payment_slip = request.FILES.Payment_slip
-		# form.TAN_Document = request.FILES.TAN_Document
-		print(dir(form))
-		if form.is_valid():
-			print('after valid')
-			clientprfl = form.save(commit=False)
-			clientprfl.client = client
-			clientprfl.save()
-			messages.success(request, "Profile updated successfully for " + client.user.get_full_name())
-			return redirect('client')
-		else :
-			messages.error(request, 'Only pdf or docx files can be uploaded in file fields and jpeg or png files can only be uploaded in image field')
-	
 	return render(request, 'accounts/client-profile.html', context)
 
 
@@ -282,8 +316,7 @@ def approvepartnerpage(request,pk):
 	if request.user is not None and request.user.is_staff:
 		user=User.objects.get(id=pk)
 		partner = Partner.objects.get(user=user)
-		services = partner.services_provided
-		context = {'partner':partner}
+		context = {'partner':partner, 'services':partner.services_provided.all()}
 		return render(request,'accounts/approve-partner.html',context)
 	else:
 		return HttpResponse("<h3>Permission Denied</h3>")
@@ -299,14 +332,6 @@ def approvepartner(request,pk):
 		return HttpResponse("<h3>Permission Denied</h3>")
 
 def disapprovepartner(request,pk):
-	if request.user is not None and request.user.is_staff:
-		partner=User.objects.get(id=pk)
-		partner.delete()
-		return redirect('manager')
-	else:
-		return HttpResponse("<h3>Permission Denied</h3>")
-
-def dismisspartner(request,pk):
 	if request.user is not None and request.user.is_staff:
 		partner=User.objects.get(id=pk)
 		partner.delete()

@@ -19,6 +19,7 @@ urlpatterns = [
     path('client/view_product/<str:pk>/', views.viewProduct, name='view-product'),
     path('partner/view_product/<str:pk>/', views.viewpartnerProduct, name='partnerview-product'),
     path('partner/review_order/<str:pk>/', views.deliverProduct, name='deliver-product'),
+    path('partner-profile/',views.partnerprofile, name= 'partner-profile'),
     path('manager/assign_partner/<str:pk>/', views.AssignPartner, name='Assign-Partner'),
     path('manager/', views.manager, name='manager'),
     path('verify_email/', views.verify_email, name= 'verify_email'),
@@ -30,7 +31,7 @@ urlpatterns = [
     path('manager/approve_partner_page/<str:pk>/',views.approvepartnerpage, name='Approve-Partner-Page'),
     path('manager/approve_partner_page/disapprove_partner/<str:pk>/',views.disapprovepartner, name='Disapprove-Partner'),
     path('manager/approve_partner_page/approve_partner/<str:pk>/',views.approvepartner, name='Approve-Partner'),
-    path('manager/dismiss_partner/<str:pk>/',views.dismisspartner, name='Dismiss-Partner'),
+    path('manager/dismiss_partner/<str:pk>/',views.disapprovepartner, name='Dismiss-Partner'),
 ]
 
 if settings.DEBUG:

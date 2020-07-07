@@ -79,6 +79,9 @@
                 {{form.TAN_Document}}
             </div>
         </div>
+        {% for message in messages|slice:1%}
+		    <p>{{message}}</p>
+	    {% endfor %}
         <input type="submit" class="btn btn-info"  name="submit">
     </form>
     </div>
