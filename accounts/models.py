@@ -5,7 +5,7 @@ from django.db import models
 from django.utils import timezone
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
-
+from .database import *
 
 class UserManager(BaseUserManager):
     def create_user(
@@ -26,7 +26,6 @@ class UserManager(BaseUserManager):
             email=self.normalize_email(email),
             first_name=first_name,
             last_name=last_name,
-            email_verified = False,
         )
 
         user.set_password(password)
@@ -50,7 +49,6 @@ class UserManager(BaseUserManager):
         user.is_client = False
         user.is_partner = False
         user.is_superuser = True
-        user.email_verified = True
         user.save(using=self._db)
         return user
 
@@ -65,8 +63,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(_('last name'), max_length=150, blank=True)
     is_client = models.BooleanField(default=False)
     is_partner = models.BooleanField(default=False)
-    otp = models.IntegerField(null=True)
-    email_verified = models.BooleanField(default=False)
     is_active = models.BooleanField(
         _('active'),
         default=True,
@@ -115,6 +111,25 @@ class User(AbstractBaseUser, PermissionsMixin):
         # Simplest possible answer: Yes, always
         return True
 
+def upload_path(dir_type, file_type):
+    def temp(instance, filename):
+        ext = filename.split('.')[-1]
+        return ('media/'+ dir_type+'/{0}/'+file_type+'.'+ext).format(instance.user.id)
+    return temp
+
+def upload_path_partner(file_type):
+    def temp(instance, filename):
+        ext = filename.split('.')[-1]
+        return ('media/partner/{0}/'+file_type+'.'+ext).format(instance.partner.user.id)
+    return temp
+
+def upload_path_client(file_type):
+    def temp(instance, filename):
+        ext = filename.split('.')[-1]
+        return ('media/client/{0}/'+file_type+'.'+ext).format(instance.client.user.id)
+    return temp
+
+
 class Service(models.Model):
     name = models.CharField(max_length=100, blank=False)
     
@@ -123,7 +138,15 @@ class Service(models.Model):
 
 class Client(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-    phone = models.CharField(max_length=100)
+    phone = models.CharField(max_length=10)
+    company = models.CharField(max_length=200)
+    designation = models.CharField(max_length=100)
+    company_type = models.CharField(max_length=100)
+    mobile = models.CharField(max_length=10)
+    address = models.CharField(max_length=500)
+    state = models.CharField(max_length=150)
+    city = models.CharField(max_length=100)
+    pin = models.CharField(max_length=10)
 
     def __str__(self):
         return self.user.get_full_name()
@@ -137,41 +160,50 @@ def validate_file_extension(value):
 
 class Clientprofile(models.Model):
     client = models.ForeignKey(Client, null=True, on_delete=models.SET_NULL)
-    logo = models.ImageField(upload_to='media',max_length=200)
-    Official_photo = models.ImageField(upload_to='media',max_length=200)
-    Aadhar_card = models.FileField(upload_to='media',max_length=200,validators=[validate_file_extension])
-    Pan_card = models.FileField(upload_to='media',max_length=200,validators=[validate_file_extension])
-    Certificate_of_Inc = models.FileField(upload_to='media',max_length=200,validators=[validate_file_extension])
-    Company_Pan_card = models.FileField(upload_to='media',max_length=200,validators=[validate_file_extension])
-    Payment_slip = models.FileField(upload_to='media',max_length=200,validators=[validate_file_extension])
-    TAN_Document = models.FileField(upload_to='media',max_length=200,validators=[validate_file_extension])
+    logo = models.ImageField(upload_to=upload_path_client('logo'),max_length=200)
+    Official_photo = models.ImageField(upload_to=upload_path_client('photo'),max_length=200)
+    Aadhar_card = models.FileField(upload_to=upload_path_client('aadhar'),max_length=200,validators=[validate_file_extension])
+    Pan_card = models.FileField(upload_to=upload_path_client('pan'),max_length=200,validators=[validate_file_extension])
+    Certificate_of_Inc = models.FileField(upload_to=upload_path_client('coinc'),max_length=200,validators=[validate_file_extension])
+    Company_Pan_card = models.FileField(upload_to=upload_path_client('cpan'),max_length=200,validators=[validate_file_extension])
+    Payment_slip = models.FileField(upload_to=upload_path_client('ps'),max_length=200,validators=[validate_file_extension])
+    TAN_Document = models.FileField(upload_to=upload_path_client('tan'),max_length=200,validators=[validate_file_extension])
 
 class Partner(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-    company = models.CharField(max_length=200)
-    city = models.CharField(max_length=200)
+    phone = models.CharField(max_length=12)
     services_provided = models.ManyToManyField(Service)
-    description = models.CharField(max_length=200, null=True, blank=True)
+    ca_final = models.BooleanField()
+    cfa_level3 = models.BooleanField()
+    ifc = models.BooleanField()
+    frm_acc = models.BooleanField()
+    work_exp = models.IntegerField()
+    previous_work = models.CharField(max_length=1000,null=True)
+    address = models.CharField(max_length=500)
+    state = models.CharField(max_length=150)
+    city = models.CharField(max_length=100)
+    pin = models.CharField(max_length=10)
     is_approved = models.BooleanField(default=False)
+    resume = models.FileField(max_length=100, upload_to=upload_path('partner','resume'), null=True)
 
     def __str__(self):
-        return self.company
+        return (self.user.first_name + ' '+self.user.last_name)
 
 class Partnerprofile(models.Model):
     partner = models.ForeignKey(Partner, null=True, on_delete=models.SET_NULL)
-    Official_photo = models.ImageField(upload_to='media')
-    Aadhar_card = models.FileField(upload_to='media',max_length=200,validators=[validate_file_extension])
-    Pan_card = models.FileField(upload_to='media',max_length=200,validators=[validate_file_extension])
-    Work_experience = models.FileField(upload_to='media',max_length=200,validators=[validate_file_extension])
-    Payment_slip = models.FileField(upload_to='media',max_length=200,validators=[validate_file_extension])
-    Educational_certificate = models.FileField(upload_to='media',max_length=200,validators=[validate_file_extension])
+    Official_photo = models.ImageField(upload_to=upload_path_partner('photo'))
+    Aadhar_card = models.FileField(upload_to=upload_path_partner('aadhar'),max_length=200,validators=[validate_file_extension])
+    Pan_card = models.FileField(upload_to=upload_path_partner('pan'),max_length=200,validators=[validate_file_extension])
+    Work_experience = models.FileField(upload_to=upload_path_partner('wexp'),max_length=200,validators=[validate_file_extension])
+    Payment_slip = models.FileField(upload_to=upload_path_partner('ps'),max_length=200,validators=[validate_file_extension])
+    Educational_certificate = models.FileField(upload_to=upload_path_partner('ec'),max_length=200,validators=[validate_file_extension])
 
 
 class Order(models.Model):
     client = models.ForeignKey(Client, null=True, on_delete=models.SET_NULL)
     service_req = models.ForeignKey(Service, null=True, on_delete=models.SET_NULL)
     city = models.CharField(max_length=200, blank=False)
-    documents = models.FileField(upload_to='media',max_length=200,validators=[validate_file_extension])
+    documents = models.FileField(upload_to=upload_path('order','document'),max_length=200,validators=[validate_file_extension])
     comments = models.CharField(max_length=200, null=True, blank=True)
     ordered_date = models.DateTimeField(auto_now_add=True,null=True)
 
@@ -181,5 +213,5 @@ class Manage(models.Model):
 
 class Product(models.Model):
     managed = models.ForeignKey(Manage, null=True, on_delete=models.SET_NULL)
-    documents = models.FileField(upload_to='media',max_length=200,validators=[validate_file_extension])
+    documents = models.FileField(upload_to=upload_path('product','document'),max_length=200,validators=[validate_file_extension])
     comments = models.CharField(max_length=200, null=True, blank=True)

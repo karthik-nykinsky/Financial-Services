@@ -85,14 +85,15 @@ from accounts.database import *
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'Financial-Services',
-        'USER': 'postgres',
-        'PASSWORD': '1234',
-        'HOST':'localhost',
-        'PORT':'5432'
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': NAME,
+        'USER': USER,
+        'PASSWORD': PASSWORD,
+        'HOST':HOST,
+        'PORT':PORT
     }
 }
+DATABASES['default']['OPTIONS'] = {'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -140,3 +141,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, '')
 MEDIA_URL = '/media/'
 
 AUTH_USER_MODEL = 'accounts.User'
+
+ALLOWED_HOSTS = ['*']
