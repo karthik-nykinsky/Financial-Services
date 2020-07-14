@@ -370,7 +370,6 @@ def approvepartner(request,pk):
         sub = "Your application Status as Nykinsky Partner"
         message = "Hello " + user.first_name + "\n" + "Congratulations you are now Nykinsky partner. Login for Updates"
         send_mail(sub, message, settings.EMAIL_HOST_USER, [user.email])
-        partner.delete()
         return redirect('manager')
     else:
         return HttpResponse("<h3>Permission Denied</h3>")

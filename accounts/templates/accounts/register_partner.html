@@ -81,6 +81,13 @@
 					<form id="form_main">
 						{% csrf_token %}
 						<div id = "error"  style="color:red"></div>
+						<label> <strong> Company Name: </strong></label>
+						<div class="input-group mb-3">
+							<div class="input-group-append">
+								<span class="input-group-text"><i class="fas fa-user"></i></span>
+							</div>
+							{{form.company}}
+						</div>
 						<label> <strong> First Name: </strong></label>
 						<div class="input-group mb-3">
 							<div class="input-group-append">
@@ -336,7 +343,7 @@
 				return 1;
 			}
 			else if (!(/\d/.test(s) && /[a-zA-Z]/.test(s) && /\W/.test(s) && s.length >= 8)) {
-				document.getElementById('error').innerHTML="Weak Password\n 1.Password should be minimum 8 character long\n2. Password should contain at least\n  a.1 special character\n  b.1 numeric character\n  c.1 alphabatic character";
+				document.getElementById('error').innerHTML="Weak Password<br> 1.Password should be minimum 8 character long<br>2. Password should contain at least<br>  a.1 special character<br>  b.1 numeric character<br>  c.1 alphabatic character";
 				return 1;
 			}
 			else if(document.getElementById("id_password1").value != document.getElementById("id_password2").value){
