@@ -1,0 +1,63 @@
+{% extends 'accounts/main.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+    div.form
+    {
+        display: block;
+        text-align: center;
+    }
+    form
+    {
+        display: inline-block;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+    }
+</style>
+
+<br>
+    <p>
+        <h3>Order Details</h3><br>
+    Client Name: {{order.client.user.first_name}}<br>
+    Service Required: {{order.service_req}}<br>
+    Client Comments: {{order.comments}}<br>
+    Ordered Date: {{order.ordered_date}}<br>
+    City: {{order.city}}<br>
+    Documents: <a href="{{ order.documents.url }}" class="btn btn-info btn-sm" target="_blank" style="width: 60px;">Doc</a> <br>
+    </p>
+
+<br><h3>Assign Partner</h3><br>
+
+    <form action="{% url 'Assign-Partner' order.id %}" method="POST">
+        {% csrf_token %}
+        <div class="input-group mb-3">
+            <!-- <div class="input-group-prepend">
+                <span class="input-group-text" style="background-color: #bf111a44;">All Partners :</span>
+                {{form.partner}}
+                <br>
+            </div> -->
+            <div class="input-group-prepend">
+                <span class="input-group-text" style="background-color: #bf111a44;">Eligible Partners :</span>
+                <select name="desired_partner" id="partner-select">
+                    <option value="">--Please choose an option--</option>
+                    {% for partner in filtered_partners %}
+                    <option value={{partner.pk}}>{{partner}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <input type="submit" class="btn btn-info" value="Submit" name="submit">
+    </form>
+
+    <script>
+        var form_fields = document.getElementsByTagName('input')
+        for (var field in form_fields){	
+            if(field == form_fields.length -1)
+            break;
+			form_fields[field].className += ' form-control'
+		}
+    </script>
+{% endblock %}

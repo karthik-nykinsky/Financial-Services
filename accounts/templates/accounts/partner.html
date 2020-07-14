@@ -1,0 +1,77 @@
+{%  extends 'accounts/main.html' %}
+
+{% block content %}
+
+		<br>
+
+		{% for message in messages|slice:":1" %}
+			{% if message is not None %}
+				<div class="row">
+					<div class="col-md">
+						<div class="alert alert-success alert-dismissible">
+							<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+							<strong>Success!</strong> {{message}}.
+						</div>
+					</div>
+				</div>
+			<br>
+			{% endif %}
+		{% endfor %}
+
+		<div class="row">
+			<div class="col">
+				<div class="col-md">
+					<div class="card text-center text-white  mb-3" id="total-orders">
+						  <div class="card-header">
+							  <h5 class="card-title">Orders Pending</h5>
+						  </div>
+						  <div class="card-body">
+							<h3 class="card-title">{{todo_no}}</h3>
+						  </div>
+					</div>
+				</div>
+			</div>
+		
+			<div class="col">
+				<div class="col-md">
+					<div class="card text-center text-white  mb-3" id="orders-pending">
+						  <div class="card-header">
+							  <h5 class="card-title">Orders Delivered</h5>
+						  </div>
+						  <div class="card-body">
+							<h3 class="card-title">{{done_no}}</h3>
+						  </div>
+					</div>
+				</div>
+			</div>
+
+			<div class="col">
+			<div class="col-md">
+				<div class="card card-body">
+					<h5>Contact Information</h5>
+					<hr>
+					<p>Username: {{partner.user.first_name}}  {{partner.user.last_name}}</p>
+					<p>Email: {{partner.user.email}}</p>
+					<p>Company: {{partner.company}}</p>
+					<p>City: {{partner.city}}</p>
+					<a class="btn btn-outline-info  btn-sm " href="{% url 'partner-profile' %}">Update Profile</a>
+				</div>
+			</div>
+		</div>
+		</div>
+
+		<br>
+		<td>
+			<a class="btn btn-outline-info  btn-sm btn-block" href="{% url 'partner-pendingorders' %}">Pending Orders</a>
+		</td>
+		<br>
+		<td>
+			<a class="btn btn-outline-info  btn-sm btn-block" href="{% url 'partner-deliveredorders' %}">Delivered Orders</a>
+		</td>
+
+		<br>
+
+		
+		
+
+{% endblock content %}

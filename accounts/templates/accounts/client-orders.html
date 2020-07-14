@@ -1,0 +1,30 @@
+{%  extends 'accounts/main.html' %}
+
+{% block content %}
+<br>
+<div class="row">
+	<div class="col-md">
+		<div class="card card-body">
+			<h5>My Orders:</h5>
+			<table class="table table-sm">
+				<tr>
+					<th>Order ID</th>
+					<th>Category</th>
+					<th>City</th>
+					<th>Date Orderd</th>
+					<th>Documents</th>
+				</tr>
+				{% for order in orders %}
+					<tr>
+					<td>{{order.id}}</td>
+					<td>{{order.service_req}}</td>
+					<td>{{order.city}}</td>
+					<td>{{order.ordered_date}}</td>
+					<td><a href="{{ order.documents.url }}" class="btn btn-outline-info  btn-sm btn-block" target="_blank">View Doc</a></td>
+					</tr>
+				{% endfor %}
+			</table>
+		</div>
+	</div>
+</div>
+{% endblock content %}

@@ -1,0 +1,86 @@
+{% extends 'accounts/main.html' %}
+
+{% block content %}
+<br>
+
+{% for message in messages|slice:":1" %}
+    {% if message is not None %}
+        <div class="row">
+            <div class="col-md">
+                <div class="alert alert-success alert-dismissible">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>Success!</strong> {{message}}.
+                </div>
+            </div>
+        </div>
+    <br>
+    {% endif %}
+{% endfor %}
+
+<div class="row">
+    <div class="col">
+        <div class="col-md">
+            <div class="card text-center text-white  mb-3" id="total-orders">
+                  <div class="card-header">
+                      <h5 class="card-title">Pending orders to be Assigned</h5>
+                  </div>
+                  <div class="card-body">
+                    <h3 class="card-title">{{ToBAsnd_no}}</h3>
+                  </div>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="col-md">
+            <div class="card text-center text-white  mb-3" id="total-orders">
+                    <div class="card-header">
+                        <h5 class="card-title">Partners to be Approved</h5>
+                    </div>
+                    <div class="card-body">
+                    <h3 class="card-title">{{all_partners_no}}</h3>
+                    </div>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="col-md">
+            <div class="card text-center text-white  mb-3" id="total-orders">
+                    <div class="card-header">
+                        <h5 class="card-title">Approved Partners</h5>
+                    </div>
+                    <div class="card-body">
+                    <h3 class="card-title">{{actual_partners_no}}</h3>
+                    </div>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="col-md">
+            <div class="card text-center text-white  mb-3" id="total-orders">
+                    <div class="card-header">
+                        <h5 class="card-title">Clients</h5>
+                    </div>
+                    <div class="card-body">
+                    <h3 class="card-title">{{clients_no}}</h3>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+<td>
+	<a class="btn btn-outline-info  btn-sm btn-block" href="{% url 'manager-assignpartner' %}">Assign Partner to Clients</a>
+</td>
+<br>
+<td>
+	<a class="btn btn-outline-info  btn-sm btn-block" href="{% url 'manager-approvepartner' %}">Approve the registered partners</a>
+</td>
+<br>
+<td>
+	<a class="btn btn-outline-info  btn-sm btn-block" href="{% url 'manager-approvedpartners' %}">View Approved partners</a>
+</td>
+
+<br>
+<td>
+	<a class="btn btn-outline-info  btn-sm btn-block" href="{% url 'manager-viewclients' %}">View Clients</a>
+</td>
+{% endblock %}

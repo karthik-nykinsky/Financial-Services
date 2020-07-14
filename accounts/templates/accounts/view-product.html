@@ -1,0 +1,26 @@
+{% extends 'accounts/main.html' %}
+{% load static %}
+{% block content %}
+<br>
+<div class="card card-body">
+    <p>
+        <h3>Order Details</h3><br>
+    Order Id: {{order.id}}<br>
+    Service Required: {{order.service_req}}<br>
+    Client Comments: {{order.comments}}<br>
+    Ordered Date: {{order.ordered_date}}<br>
+    City: {{order.city}}<br>
+    Document: <td><a href="{{ order.documents.url }}" class="btn btn-primary btn-sm" target="_blank" style="width: 180px;">View Doc</a></td>
+    </p>
+</div>
+<br>
+<div class="card card-body">
+    <p>
+        <h3>Service</h3><br>
+    Document: 
+    <a href="{{ product.documents.url }}" class="btn btn-primary btn-sm" target="_blank" style="width: 180px;">Download document</a> <br>
+    Comments: {{product.comments}}<br>
+    By Partner: {{partner}}<br> 
+    </p>
+</div>
+{% endblock %}

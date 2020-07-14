@@ -1,0 +1,87 @@
+{%  extends 'accounts/main.html' %}
+
+{% block content %}
+
+	<br>
+
+		{% for message in messages|slice:":1" %}
+			{% if message is not None %}
+			<div class="row">
+				<div class="col-md">
+					<div class="alert alert-success alert-dismissible">
+						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+						<strong>Success!</strong> {{message}}.
+					</div>
+				</div>
+			</div>
+		<br>
+			{% endif %}
+		{% endfor %}
+
+
+<div class="row">
+	<div class="col-md">
+		<div class="card card-body">
+			<h5>Order:</h5>
+			<hr>
+			<a class="btn btn-outline-info  btn-sm btn-block" href="{% url 'client-order' %}">Create an Order</a>
+			<a class="btn btn-outline-danger  btn-sm btn-block" href="">Delete Order</a>
+
+		</div>
+	</div>
+
+	<div class="col-md">
+		<div class="card card-body">
+			<h5>Contact Information</h5>
+			<hr>
+			<p>Username: {{client.user.first_name}}  {{client.user.last_name}}</p>
+			<p>Email: {{client.user.email}}</p>
+			<p>Phone: {{client.phone}}</p>
+			<a class="btn btn-outline-info  btn-sm " href="{% url 'client-profile' %}">Update Profile</a>
+		</div>
+	</div>
+
+	<!-- <div class="col-md">
+		<div class="card card-body">
+			<h5>Your Orders</h5>
+			<hr>
+			<h1 style="text-align: center;padding: 10px"></h1>
+			<div class="card card-body">
+				{% for order in orders %}
+					<p>{{order.service_req}}</p>
+					<p>{{order.city}}</p>
+					<p>{{order.ordered_date}}</p>
+					<hr>
+				{% endfor %}
+			</div>
+		</div>
+	</div> -->
+</div>
+
+<br>
+
+<!-- <div class="row">
+	<div class="col">
+		<div class="card card-body">
+			<form method="get">
+
+		    <button class="btn btn-primary" type="submit">Search</button>
+		  </form>
+		</div>
+	</div>
+	
+</div>
+<br> -->
+
+
+
+<br>
+
+<td>
+	<a class="btn btn-outline-info  btn-sm btn-block" href="{% url 'client-orders' %}">My Orders</a>
+</td>
+<br>
+<td>
+	<a class="btn btn-outline-info  btn-sm btn-block" href="{% url 'client-deliveredorders' %}">Delivered Orders</a>
+</td>
+{% endblock %}

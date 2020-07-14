@@ -1,0 +1,31 @@
+{% extends 'accounts/main.html' %}
+
+{% block content %}
+<br>
+<div class="row">
+    <div class="col-md">
+        <div class="card card-body">
+            <table class="table table-sm">
+                <h5>Partners to be Approved</h5>
+                <tr>
+                    <th>Partner ID</th>
+                    <th>Partner Name</th>
+                    <th>Company</th>
+                    <th>City</th>
+                    <th>Approve Partner</th>
+                {% for p in partners %}
+                <tr>
+                    <td>{{p.user.id}}</td>
+                    <td>{{p.user.first_name}}</td>
+                    <td>{{p.company}}</td>
+                    <td>{{p.city}}</td>
+                    <td><a class="btn btn-outline-info  btn-sm btn-block" href="{% url 'Approve-Partner-Page' p.user.id %}">View-Partner</a></td>
+                 {% endfor %}
+                </tr>
+
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

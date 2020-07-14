@@ -1,0 +1,41 @@
+{% extends 'accounts/main.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+    div.form
+    {
+        display: block;
+        text-align: center;
+    }
+    form
+    {
+        display: inline-block;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+    }
+</style>
+
+<br>
+    <p>
+        <h3>Partner Details</h3><br>
+    <strong>Partner Name: </strong>{{partner.user.first_name}}<br>
+    <strong>Mobile number: </strong>{{partner.phone}}<br>
+    <strong>Services: </strong>{% for service in services %}  {{service}},  {% endfor %} <br>
+    <strong>CA Final: </strong>{{partner.ca_final}}<br>
+    <strong>CFA Level 3: </strong>{{partner.cfa_level3}}<br>
+    <strong>International Financial Course: </strong>{{partner.ifc}}<br>
+    <strong>FRM/ACCA: </strong>{{partner.frm_acc}}<br>
+    <strong>Work Experience: </strong>{{partner.work_exp}}<br>
+    <strong>Previous Work: </strong>{{partner.previous_work}}<br>
+    <strong>City: </strong>{{partner.city}}<br>
+    <strong>State: </strong>{{partner.state}}<br>
+    <strong>Resume: </strong><td><a href="{{ partner.resume.url }}" class="btn btn-primary btn-sm" target="_blank" style="width: 180px;">View Resume</a></td>
+    </p>
+<br>
+
+<td><a class="btn btn-outline-info  btn-sm btn-block" href="{% url 'Approve-Partner' partner.user.id %}">Approve-Partner</a></td>
+<td><a class="btn btn-outline-danger  btn-sm btn-block" href="{% url 'Disapprove-Partner' partner.user.id %}">Disapprove-Partner</a></td>
+
+{% endblock %}

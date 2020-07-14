@@ -1,0 +1,35 @@
+{% extends 'accounts/main.html' %}
+
+{% block content %}
+<br>
+<div class="row">
+    <div class="col-md">
+        <div class="card card-body">
+            <table class="table table-sm">
+                <h5>Clients</h5>
+                <tr>
+                    <th>Client ID</th>
+                    <th>Name</th>
+                    <th>Designation</th>
+                    <th>Company</th>
+                    <th>City</th>
+                    <th>State</th>
+                    <th>Office No.</th>
+                {% for c in clients %}
+                <tr>
+                    <td>{{c.user.id}}</td>
+                    <td>{{c.user.first_name}}</td>
+                    <td>{{c.designation}}</td>
+                    <td>{{c.company}}</td>
+                    <td>{{c.city}}</td>
+                    <td>{{c.state}}</td>
+                    <td>{{c.phone}}</td>
+                 {% endfor %}
+                </tr>
+
+            </table>
+        </div>
+    </div>
+
+
+{% endblock %}
