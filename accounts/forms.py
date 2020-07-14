@@ -65,7 +65,7 @@ class PartnerSignUpForm(UserCreationForm):
     state = forms.CharField(max_length=150)
     city = forms.CharField(max_length=100)
     pin = forms.CharField(max_length=10)
-    work_exp = forms.IntegerField()
+    work_exp = forms.IntegerField(min_value=0)
     ca_final = forms.ChoiceField(choices = BOOL_CHOICES, initial='', widget=forms.Select(), required=True)
     cfa_level3 =forms.ChoiceField(choices = BOOL_CHOICES, initial='', widget=forms.Select(), required=True)
     ifc = forms.ChoiceField(choices = BOOL_CHOICES, initial='', widget=forms.Select(), required=True)

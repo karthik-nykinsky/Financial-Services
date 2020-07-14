@@ -58,7 +58,7 @@ def submit_client(request):
         else:
             request.session['attempts'] += 1
             sub = "Nykinsky One Time Password"
-            message = "Hello " + request.GET['form']['first_name'] + "\n" + "Your OTP is " + str(request.session['otp'])
+            message = "Hello " + request.GET['first_name'] + "\n" + "Your OTP is " + str(request.session['otp'])
             send_mail(sub, message, settings.EMAIL_HOST_USER, [request.session['email']])
             return JsonResponse({"status": str(request.session['attempts'])})
 
@@ -101,8 +101,7 @@ def submit_partner(request):
         else:
             request.session['attempts'] += 1
             sub = "Nykinsky One Time Password"
-            message = "Hello " + request.GET['form']['first_name'] + "\n" + "Your OTP is " + str(
-                request.session['otp'])
+            message = "Hello " + request.GET['first_name'] + "\n" + "Your OTP is " + str(request.session['otp'])
             send_mail(sub, message, settings.EMAIL_HOST_USER, [request.session['email']])
             return JsonResponse({"status": str(request.session['attempts'])})
 

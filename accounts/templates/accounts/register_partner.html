@@ -221,6 +221,12 @@
 			<p>Email already exist</p>
 		</div>
 	</div>
+	<div class="bg-modal4">
+		<div class="modal-content4">
+			<p>Registration Successfully Completed<br>
+				<a href="{% url 'partner-login' %}" class="ml-2">Click here</a> for login page </p>
+		</div>
+	</div>
 	<div class="bg-modal">
 		<div class="modal-content">
 
@@ -240,13 +246,13 @@
 						<input onclick="submit_form();return false;" class="btn login_btn" type="submit" name = "verify" value="Verify">
 					</div>
 					<div class="d-flex justify-content-center mt-3 login_container">
-						<input onclick="send_new();return false;" class="btn login_btn" type="submit" name = "send_new" value="Resend">
+						<input onclick="send_new();return false;" class="btn login_btn" type="submit" name = "resend" value="Resend">
 					</div>
 			</form>
 		</div>
 	</div>
 	<style>
-	.bg-modal, .bg-modal2, .bg-modal3 {
+	.bg-modal, .bg-modal2, .bg-modal3, .bg-modal4 {
         height: 100%;
         width: 100%;
         background-color:rgba(0,0,0,0.7);
@@ -272,15 +278,24 @@
         text-align: center;
         padding: 40px;
     }
+     .modal-content4{
+     	background: white;
+    	position: fixed;
+        width: 400px;
+        height: 150px;
+        text-align: center;
+        padding: 50px;
+     }
     </style>
 
 
 	<script>
 
 			function validate(){
+			var s = document.getElementById("id_password1").value;
 			const checkboxes = document.querySelectorAll('input[name="services_provided"]:checked');
 			var allowedExtensions = /(\.pdf|\.doc|\.PDF|\.DOC)$/i;
-			if(!/^[a-zA-Z]+$/.test(document.getElementById("id_first_name").value)){
+			if(!/^([a-zA-Z]+)(\s*)([a-zA-Z]*)$/.test(document.getElementById("id_first_name").value)){
 				document.getElementById('error').innerHTML="Invalid First Name";
 				return 1;
 			}
@@ -292,7 +307,7 @@
 				document.getElementById('error').innerHTML="Invalid Email";
 				return 1;
 			}
-			else if(document.getElementById("id_phone").value.length != 10 || !/[0-9]+$/.test(document.getElementById("id_phone").value)){
+			else if(document.getElementById("id_phone").value.length != 10 || !/^[6789][0-9]+$/.test(document.getElementById("id_phone").value)){
 				document.getElementById('error').innerHTML="Invalid Phone";
 				return 1;
 			}
@@ -304,7 +319,7 @@
 				document.getElementById('error').innerHTML="Invalid Address";
 				return 1;
 			}
-			else if (!/^[a-zA-Z]+$/.test(document.getElementById("id_state").value)){
+			else if (!/^([a-zA-Z]+)(\s*)([a-zA-Z]*)$/.test(document.getElementById("id_state").value)){
 				document.getElementById('error').innerHTML="Invalid State";
 				return 1;
 			}
@@ -312,7 +327,7 @@
 				document.getElementById('error').innerHTML="Only PDF or DOC format allowed";
 				return 1;
 			}
-			else if (!/^[a-zA-Z]+$/.test(document.getElementById("id_city").value)){
+			else if (!/^([a-zA-Z]+)(\s*)([a-zA-Z]*)$/.test(document.getElementById("id_city").value)){
 				document.getElementById('error').innerHTML="Invalid City";
 				return 1;
 			}
@@ -320,8 +335,8 @@
 				document.getElementById('error').innerHTML="Invalid Pin";
 				return 1;
 			}
-			else if(document.getElementById("id_password1").value.length < 8){
-				document.getElementById('error').innerHTML="Password short";
+			else if (!(/\d/.test(s) && /[a-zA-Z]/.test(s) && /\W/.test(s) && s.length >= 8)) {
+				document.getElementById('error').innerHTML="Weak Password\n 1.Password should be minimum 8 character long\n2. Password should contain at least\n  a.1 special character\n  b.1 numeric character\n  c.1 alphabatic character";
 				return 1;
 			}
 			else if(document.getElementById("id_password1").value != document.getElementById("id_password2").value){
@@ -380,7 +395,8 @@
    				processData:false,
 				success: function(response){
 					if (response.status == '-1'){
-						location.href="/login/partner";
+						document.querySelector('.bg-modal2').style.display = 'none';
+						document.querySelector('.bg-modal4').style.display = 'flex';
 					}
 					else if (response.status == '-2'){
 						location.href = "/";
@@ -396,22 +412,32 @@
         	return false;
         }
         function send_new(){
-        	$.ajax({
-        		type: 'GET',
-        		data: {},
-        		url: '/submit/partner/',
-				success: function(response){
-					if (response.status == '-2'){
-						location.href = "/";
+        	if(rem > 0){
+				document.getElementById('error2').innerHTML= "sending";
+				$.ajax({
+					type: 'GET',
+					data: {
+							first_name: $('#id_first_name').val(),
+							csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+							},
+					url: '/submit/partner/',
+					success: function(response){
+						if (response.status == '-2'){
+							location.href = "/";
+						}
+						else {
+							rem = rem - 1;
+							document.getElementById('error2').innerHTML= rem.toString()+" attempts remaining";
+						}
 					}
-					else {
-						rem = rem - 1;
-						document.getElementById('error2').innerHTML= "Wrong OTP " + rem.toString()+" attempts remaining";
-					}
-				}
 
-        	});
+				});
         	return false;
+        	}
+        	else{
+        		location.href = "/";
+        		return false;
+        	}
         }
 	</script>
 </body>
