@@ -6,6 +6,8 @@
     pip install django
 ## psycopg2
     pip install psycopg2
+## Pillow
+    pip install Pillow
 
 # Instructions
 
