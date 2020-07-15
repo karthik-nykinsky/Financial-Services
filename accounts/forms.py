@@ -65,7 +65,7 @@ class PartnerSignUpForm(UserCreationForm):
     state = forms.CharField(max_length=150)
     city = forms.CharField(max_length=100)
     pin = forms.CharField(max_length=10)
-    work_exp = forms.IntegerField()
+    work_exp = forms.IntegerField(min_value=0)
     ca_final = forms.ChoiceField(choices = BOOL_CHOICES, initial='', widget=forms.Select(), required=True)
     cfa_level3 =forms.ChoiceField(choices = BOOL_CHOICES, initial='', widget=forms.Select(), required=True)
     ifc = forms.ChoiceField(choices = BOOL_CHOICES, initial='', widget=forms.Select(), required=True)
@@ -73,6 +73,7 @@ class PartnerSignUpForm(UserCreationForm):
     previous_work = forms.CharField(required=False,max_length=1000)
     phone = forms.CharField(max_length=12)
     resume = forms.FileField(max_length=100, required=True)
+    company = forms.CharField(max_length=100)
 
     class Meta(UserCreationForm.Meta):
         model = User
@@ -95,7 +96,8 @@ class PartnerSignUpForm(UserCreationForm):
                  work_exp = self.cleaned_data.get('work_exp'),
                  previous_work = self.cleaned_data.get('previous_work'),
                  phone = self.cleaned_data.get('phone'),
-                 resume = self.cleaned_data.get('resume'))
+                 resume = self.cleaned_data.get('resume'),
+                 company = self.cleaned_data.get('company'))
         partner.services_provided.add(*self.cleaned_data.get('services_provided'))
         return user
 

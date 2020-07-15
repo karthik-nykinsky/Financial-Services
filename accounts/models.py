@@ -152,6 +152,7 @@ class Clientprofile(models.Model):
 
 class Partner(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    company = models.CharField(max_length=100)
     phone = models.CharField(max_length=12)
     services_provided = models.ManyToManyField(Service)
     ca_final = models.BooleanField()
