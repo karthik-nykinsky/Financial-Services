@@ -1,6 +1,8 @@
+from datetime import datetime
+
 def partner_resume(instance, filename):
     ext = filename.split('.')[-1]
-    return ('media/partner/{0}/resume'+'.'+ext).format(instance.pk)
+    return ('media/partner/{0}/resume'+'.'+ext).format(instance.user.id)
 
 
 def partner_photo(instance, filename):
@@ -34,8 +36,10 @@ def partner_ps(instance, filename):
 
 
 def order(instance, filename):
+    _datetime = datetime.now()
+    s = _datetime.strftime("%Y-%m-%d-%H-%M-%S")
     ext = filename.split('.')[-1]
-    return ('media/order/{0}/document'+'.'+ext).format(instance.pk)
+    return ('media/order/{0}/{1}'+'.'+ext).format(instance.client.pk,s)
 
 
 def client_logo(instance, filename):
@@ -79,8 +83,10 @@ def client_ps(instance, filename):
 
 
 def product(instance, filename):
+    _datetime = datetime.now()
+    s = _datetime.strftime("%Y-%m-%d-%H-%M-%S")
     ext = filename.split('.')[-1]
-    return ('media/product/{0}/document'+'.'+ext).format(instance.pk)
+    return ('media/product/{0}/{1}'+'.'+ext).format(instance.managed.pk,s)
 
 
 NAME = 'fs1'
