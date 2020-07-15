@@ -4,15 +4,16 @@
     https://www.python.org/
 ## Django3
     pip install django
-## psycopg2
-    pip install psycopg2
+## mysqlclient
+    pip install mysqlclient
 ## Pillow
     pip install Pillow
 
 # Instructions
 
 ### pip install -r requirements.txt
-### Connect to Postgres in settings.py
+### Connect to Mysql by changing database.py
+### Connect to SMTP sever by changing email_server.py
 ### Run "python manage.py makemigrations"
 ### Run "python manage.py migrate"
 ### Run "python manage.py createsuperuser"
