@@ -199,7 +199,6 @@ def partnerprofile(request):
                 partnerprfl = form.save(commit=False)
                 partnerprfl.partner = partner
                 partnerprfl.save()
-                messages.success(request, "Profile updated successfully for " + partner.user.get_full_name())
                 return redirect('partner')
             else :
                 messages.error(request, 'Only pdf or docx files can be uploaded in file fields and jpeg or png files can only be uploaded in image field')
