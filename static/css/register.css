@@ -1,7 +1,9 @@
+
 html {
     margin: 0;
-    padding: 10px;
+    padding: 0;
     height: 100%;
+    background: #7abecc !important;
 }
 .user_card {
     width: 350px;
@@ -52,6 +54,9 @@ html {
     box-shadow: none !important;
     outline: 0px !important;
 }
+.error{
+    text-align: center;
+}
 
 #messages{
     background-color: grey;
@@ -59,3 +64,37 @@ html {
     padding: 10px;
     margin-top: 10px;
 }
+.bg-modal, .bg-modal2, .bg-modal3, .bg-modal4 {
+    height: 100%;
+    width: 100%;
+    background-color:rgba(0,0,0,0.7);
+    position: fixed;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: none;
+}
+.modal-content{
+    position: fixed;
+    width: 400px;
+    height: 300px;
+    text-align: center;
+    padding: 40px;
+}
+.modal-content2, .modal-content3{
+    background: white;
+    position: fixed;
+    width: 300px;
+    height: 110px;
+    text-align: center;
+    padding: 40px;
+}
+ .modal-content4{
+    background: white;
+    position: fixed;
+    width: 400px;
+    height: 150px;
+    text-align: center;
+    padding: 50px;
+ }
